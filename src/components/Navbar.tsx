@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
 import { io } from "socket.io-client";
 
-const socket = io("http://localhost:5000"); // Ajusta la URL de tu backend
+const socket = io("http://127.0.0.1:5000", {
+  transports: ["websocket", "polling"] // Permitir ambos
+}); // Ajusta la URL de tu backend
 
 const Navbar = () => {
   const [notifications, setNotifications] = useState(1);

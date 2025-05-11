@@ -1,3 +1,4 @@
+import { Component } from 'lucide-react';
 import { lazy } from 'react';
 
 const Calendar = lazy(() => import('../pages/Calendar'));
@@ -27,11 +28,36 @@ const UpdateRoles = lazy(() => import('../pages/Roles/update'))
 const CreatePermission = lazy(() => import('../pages/Permissions/create'))
 const UpdatePermission = lazy(() => import('../pages/Permissions/update'))
 
+const ListCustomers = lazy(() => import('../pages/Customer/list'))
+const CreateCustomer = lazy(() => import('../pages/Customer/create'))
+const UpdateCustomer = lazy(() => import('../pages/Customer/update'))
+const ViewCustomer = lazy(() => import('../pages/Customer/view'))
+
 const coreRoutes = [
   {
     path: '/demo',
     title: 'Demo',
     component: Demo,
+  },
+  {
+    path: '/list/customers',
+    title: 'List of Customers',
+    component: ListCustomers,
+  },
+  {
+    path: '/create/customers',
+    title: 'Create Customers',
+    component: CreateCustomer,
+  },
+  {
+    path: '/update/customers/:id',
+    title: 'Update Customers',
+    component: UpdateCustomer
+  },
+  {
+    path: '/view/customers/:id',
+    title: 'View Customer by id',
+    component: ViewCustomer
   },
   {
     path: '/create/users',
