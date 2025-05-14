@@ -33,11 +33,69 @@ const CreateCustomer = lazy(() => import('../pages/Customer/create'))
 const UpdateCustomer = lazy(() => import('../pages/Customer/update'))
 const ViewCustomer = lazy(() => import('../pages/Customer/view'))
 
+const CreateMotorcycle = lazy(() => import('../pages/Motorcycle/create'))
+const ListMotorcycle = lazy(() => import('../pages/Motorcycle/list'))
+const ViewMotorcycle = lazy(() => import('../pages/Motorcycle/view'))
+const UpdateMotorcycle = lazy(() => import('../pages/Motorcycle/update'))
+
+const CreateProduct = lazy(() => import('../pages/Product/create'))
+const ListProduct = lazy(() => import('../pages/Product/list')) 
+const UpdateProduct = lazy(() => import('../pages/Product/update'))
+const ViewProduct = lazy(() => import('../pages/Product/view'))
+
+const ListPhoto = lazy(() => import('../pages/Photo/list'));
+
 const coreRoutes = [
   {
     path: '/demo',
     title: 'Demo',
     component: Demo,
+  },
+  {
+    path: '/list/photo',
+    title: 'List of Photo', 
+    component: ListPhoto,
+
+  },
+  {
+    path: '/view/motorcycle/:id',
+    title: 'View Motorcycle by id',
+    component: ViewMotorcycle,
+  },
+  {
+    path: '/update/motorcycle/:id',
+    title: 'Update Motorcycles', 
+    component: UpdateMotorcycle,
+  },
+  {
+    path: '/create/motorcycle',
+    title: 'Create Motorcycle', 
+    component: CreateMotorcycle,
+  },
+  {
+    path: '/list/motorcycle',
+    title: 'List of Motorcycle', 
+    component: ListMotorcycle,
+  },
+  {
+    path: "/create/product",
+    title: "Create Product",
+    component: CreateProduct,
+  },
+  {
+    path: "/list/product",
+    title: "List Products",
+    component: ListProduct,
+  },
+  {
+    path: "/update/product/:id",
+    title: "Update Product",
+    component: UpdateProduct,
+  },
+  {
+    path: "/view/product/:id",
+    title: "View Product",
+    component: ViewProduct,
   },
   {
     path: '/list/customers',
