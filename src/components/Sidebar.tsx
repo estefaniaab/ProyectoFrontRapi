@@ -530,7 +530,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
               {/* <!-- Menu Item Ui Elements --> */}
               <SidebarLinkGroup
                 activeCondition={pathname === '/ui' || pathname.includes('ui')}
-              >gi
+              >
                 {(handleClick, open) => {
                   return (
                     <React.Fragment>
