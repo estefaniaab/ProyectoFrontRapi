@@ -22,23 +22,21 @@ class SecurityService extends EventTarget {
         }
     }
 
-    async login(user: User) {
-        console.log("llamando api " + `${this.API_URL}/login`);
-        try {
-            const response = await axios.post(`${this.API_URL}/login`, user, {
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-            });
-
-            const data = response.data;
-            // Redundante se hace en el userSlice en el setUser: localStorage.setItem("user", JSON.stringify(data));
-            store.dispatch(setUser(data));
-            return data;
-        } catch (error) {
-            console.error('Error during login:', error);
-            throw error;
+    login() { 
+       let data = {
+        id: 1,
+        name: "Juan Pérez",
+        email: "juan.perez@example.com",
+        password: "securepassword123",
+        age: 30,
+        city: "Madrid",
+        phone: "+34 600 123 456",
+        is_active: true,
+        token: "abc123xyz"
         }
+        localStorage.setItem("user", JSON.stringify(data))
+        store.dispatch(setUser(data))
+       return data
     }
     
     getUser() {
