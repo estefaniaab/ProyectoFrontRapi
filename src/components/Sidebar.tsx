@@ -13,7 +13,7 @@ interface SidebarProps {
 const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
   const location = useLocation();
   const { pathname } = location;
-  const user = useSelector((state: RootState) => state.user.user);    
+  const user = useSelector((state: RootState) => state.userInfo.userInfo);    
   const trigger = useRef<any>(null);
   const sidebar = useRef<any>(null);
 

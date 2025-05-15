@@ -1,11 +1,8 @@
+import { loginUser } from "../models/usuarioLogin";
+import { store } from "../store/store";
+import { clearUserInfo } from "../store/userSlice";
 const GOOGLE_CLIENT_ID = "976062190369-v58bmqc43oh7m3cbeodtb9bgf16j4gsp.apps.googleusercontent.com";
 
-interface GoogleUser {
-    name: string;
-    email: string;
-    picture: string;
-    [key: string]: any;
-}
 // Declara la función global para la API de Google
 declare global {
     interface Window {
@@ -80,19 +77,20 @@ class GoogleService {
     }
 
     public logout(): void {
-        localStorage.removeItem('googleUser');
+        localStorage.removeItem('loginUser');
+        store.dispatch(clearUserInfo()); // Despacha la acción para limpiar el estado de Redux
     }
 
 
-    public getStoredUser(): GoogleUser | null {
-        const stored = localStorage.getItem('googleUser');
+    public getStoredUser(): loginUser | null {
+        const stored = localStorage.getItem('loginUser');
         return stored ? JSON.parse(stored) : null;
     }
 
     /**
      * Decodificar el token JWT para obtener la info de usuario-
      */
-    public parseJwt(token: string): GoogleUser | null {
+    public parseJwt(token: string): loginUser | null {
         try {
             const base64Url = token.split('.')[1];
             const base64 = decodeURIComponent(

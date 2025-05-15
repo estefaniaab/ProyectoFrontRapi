@@ -1,31 +1,36 @@
 // src/store/userSlice.ts
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { User } from "../models/User";
+import { loginUser } from "../models/usuarioLogin";
 
 // Definir la composición de la variable reactiva
 interface UserState {
-    user: User | null;
+    userInfo: loginUser | null;
 }
 
-const storedUser = localStorage.getItem("user");
+const storedUser = localStorage.getItem("loginUser");
 const initialState: UserState = {
-    user: storedUser ? JSON.parse(storedUser) : null,
+    userInfo: storedUser ? JSON.parse(storedUser) : null,
 };
 
 const userSlice = createSlice({
-    name: "user",
+    name: "loginUser",
     initialState,
     reducers: {
-        setUser: (state, action: PayloadAction<User | null>) => {
-            state.user = action.payload;
+        setUserInfo: (state, action: PayloadAction<loginUser | null>) => {
+            state.userInfo = action.payload;
             if (action.payload) {
-                localStorage.setItem("user", JSON.stringify(action.payload));
+                localStorage.setItem("loginUser", JSON.stringify(action.payload));
             } else {
-                localStorage.removeItem("user");
+                localStorage.removeItem("loginUser");
             }
         },
+        // Nueva acción para el logout
+        clearUserInfo: (state) => {
+            state.userInfo = null;
+            localStorage.removeItem("loginUser")
+        }
     },
 });
 
-export const { setUser } = userSlice.actions;
+export const { setUserInfo, clearUserInfo } = userSlice.actions;
 export default userSlice.reducer;

@@ -5,12 +5,13 @@ import UserOne from '../images/user/user-01.png';
 import { useSelector } from "react-redux";
 import { RootState } from "../store/store";
 import { useNavigate } from 'react-router-dom';
-import  securityService  from '../../src/services/securityService';
+import googleServiceInstance from '../services/googleService';
+// import  securityService  from '../../src/services/securityService';
 
 const DropdownUser = () => {
   const navigate = useNavigate()
   const [dropdownOpen, setDropdownOpen] = useState(false);
-  let user = useSelector((state: RootState) => state.user.user);    
+  let userInfo = useSelector((state: RootState) => state.userInfo.userInfo); // Accedemos al estado UserInfo
   const trigger = useRef<any>(null);
   const dropdown = useRef<any>(null);
 
@@ -41,7 +42,7 @@ const DropdownUser = () => {
   });
 
   return (
-    <div> {user?
+    <div> {userInfo?
     <div className="relative">
       <Link
         ref={trigger}
@@ -51,13 +52,13 @@ const DropdownUser = () => {
       >
         <span className="hidden text-right lg:block">
           <span className="block text-sm font-medium text-black dark:text-white">
-            {user?.name}
+            {userInfo?.name} {/*Usamos el nombre del userInfo */}
           </span>
-          <span className="block text-xs">UX Designer</span>
+          <span className="block text-xs">{userInfo?.email || 'Sin email'}</span> {/* Usamos el email del userInfo */}
         </span>
 
-        <span className="h-12 w-12 rounded-full">
-          <img src={UserOne} alt="User" />
+        <span className="h-12 w-12 rounded-full overflow-hidden"> {/* Asegurar que la imagen se redondee */}
+          <img src={userInfo?.picture || UserOne} alt="User" className="object-cover w-full h-full"/>
         </span>
 
         <svg
@@ -161,7 +162,9 @@ const DropdownUser = () => {
             </Link>
           </li>
         </ul>
-        <button className="flex items-center gap-3.5 py-4 px-6 text-sm font-medium duration-300 ease-in-out hover:text-primary lg:text-base">
+        <button
+          onClick={() => googleServiceInstance.logout()}
+          className="flex items-center gap-3.5 py-4 px-6 text-sm font-medium duration-300 ease-in-out hover:text-primary lg:text-base">
           <svg
             className="fill-current"
             width="22"
@@ -179,7 +182,7 @@ const DropdownUser = () => {
               fill=""
             />
           </svg>
-          <button onClick={() => securityService.logout()}>log Out</button>
+          Log out
         </button>
       </div>  
       {/* <!-- Dropdown End --> */}

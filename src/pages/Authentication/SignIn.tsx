@@ -4,16 +4,14 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import googleService from "../../services/googleService";
 import Breadcrumb from "../../components/Breadcrumb";
+import { setUserInfo } from "../../store/userSlice";
+import { useAppDispatch } from "../../hooks/useDispatch"; // Hook tipado
+import { GithubAuth } from "../../firebase/firebase"; // Función github
 
-interface GoogleUser {
-  name: string,
-  email: string,
-  picture?: string,
-  [key: string]: any,
-}
 
 const SignIn: React.FC = () => {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     const storedGoogleUser = googleService.getStoredUser();
@@ -29,7 +27,7 @@ const SignIn: React.FC = () => {
 
     googleService.loadScript(initializeGoogleSignIn);
 
-  }, [navigate]);
+  }, [dispatch, navigate]);
 
   const handleGoogleLoginResponse = (response: any) => {
     try {
@@ -37,8 +35,9 @@ const SignIn: React.FC = () => {
       if (credential) {
         const user = googleService.parseJwt(credential);
         if (user) {
-          localStorage.setItem('googleUser', JSON.stringify(user));
+          localStorage.setItem('loginUser', JSON.stringify(user));
           console.log('Usuario de Google autenticado (con servicio):', user);
+          dispatch(setUserInfo(user)); // Despachar al store de Redux
           navigate("/");
         }
       }
@@ -46,6 +45,31 @@ const SignIn: React.FC = () => {
       console.error('Error al procesar la respuesta de Google:', error);
     }
   };  
+
+  const handleGitHubLoginClick = async () => {
+    try {
+      const result = await GithubAuth();
+      console.log("Resultado llamada gitHub", result);
+      
+      if (result?.user) {
+        const { displayName, email, photoURL, uid } = result.user;
+        const nombreUsuario = (result?.user as any)?.reloadUserInfo?.screenName;  // Porque el displayName me estaba saliendo Null, entonces toco acceder a este componente
+        const githubUser = {
+          name: displayName || nombreUsuario ||  'Usuario de GitHub',
+          email: email || "",
+          picture: photoURL || "",
+          uid: uid,
+          provider: 'github'
+        };
+        localStorage.setItem('loginUser', JSON.stringify(githubUser));
+        console.log("Usuario de Github autenticado: ", githubUser);
+        dispatch(setUserInfo(githubUser));
+        navigate("/");
+      }
+    } catch (error: any) {
+      console.error("Error al iniciar sesión con GitHub: ", error.message);
+    }
+  }; 
   
   return (
     <>
@@ -98,6 +122,17 @@ const SignIn: React.FC = () => {
                       Login
                     </button>
                     <div id="google-signin"></div>
+                    <button
+                      className="flex w-full items-center justify-center gap-3.5 rounded-lg border border-stroke bg-gray p-4 hover:bg-opacity-50 dark:border-strokedark dark:bg-meta-4 dark:hover:bg-opacity-50"
+                      onClick={handleGitHubLoginClick}
+                    >
+                      <span>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-github">
+                          <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 6.77 5.1 5.1 0 0 0 14.57 2.74 5.44 5.44 0 0 0 9 2.77 5.1 5.1 0 0 0 3.46 6.72a3.37 3.37 0 0 0-.94 2.61V21m-7-6c2.76-.35 5.81-1.54 5.81-7 0-3.9-2.72-7-7.62-7a5.3 5.3 0 0 0-.06.22C9 3.7 7.28 7 7.28 11.97c0 5.43 3.17 7.07 5.81 7.07" />
+                        </svg>
+                      </span>
+                      Sign in with Github
+                    </button>
                     {/* <button
                       className="flex w-full items-center justify-center gap-3.5 rounded-lg border border-stroke bg-gray p-4 hover:bg-opacity-50 dark:border-strokedark dark:bg-meta-4 dark:hover:bg-opacity-50" 
                       id="google-signin" 
