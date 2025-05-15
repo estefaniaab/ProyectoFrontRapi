@@ -173,7 +173,13 @@ const SignIn: React.FC = () => {
                       </span>
                       Sign in with Google
                     </button> */}
-                    
+                    {/* Microsoft Sign-In */}
+                    <button
+                      type="button"
+                      className="w-full rounded-lg border border-blue-700 bg-blue-600 text-black py-2 hover:bg-blue-700"
+                    >
+                      Iniciar sesión con Microsoft
+                    </button>
                   </Form>
                 )}
               </Formik>

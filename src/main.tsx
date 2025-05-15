@@ -7,6 +7,7 @@ import './satoshi.css';
 import { Provider } from 'react-redux'; // Importa Provider
 import { store } from './store/store';   // Importa tu store
 
+
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
     <Provider store={store}>{/* Envolvemos Router con Provider */}

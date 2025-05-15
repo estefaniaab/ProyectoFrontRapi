@@ -44,6 +44,20 @@ const UpdateProduct = lazy(() => import('../pages/Product/update'))
 const ViewProduct = lazy(() => import('../pages/Product/view'))
 
 const ListPhoto = lazy(() => import('../pages/Photo/list'));
+const CreatePhoto = lazy(()=>import('../pages/Photo/create'))
+
+const CreateDriver= lazy(()=> import('../pages/Driver/cretae'))
+const ListDriver= lazy(()=> import('../pages/Driver/list'))
+const UpdateDriver= lazy(()=> import('../pages/Driver/update'))
+const ViewDriver= lazy(()=> import('../pages/Driver/view'))
+
+const CreateRestaurant= lazy(()=> import('../pages/Restaurant/create'))
+const ListRestaurant= lazy(()=> import('../pages/Restaurant/list'))
+const UpdateRestaurant= lazy(()=> import('../pages/Restaurant/update'))
+const ViewRestaurant= lazy(()=> import('../pages/Restaurant/view'))
+
+const ListIssues = lazy(()=> import('../pages/Issues/list'))
+const CrearIssues =lazy(()=>import('../pages/Issues/create'))
 
 const coreRoutes = [
   {
@@ -58,6 +72,42 @@ const coreRoutes = [
 
   },
   {
+    path: '/issues/list/:id_moto',
+    title: 'List of issues',
+    component: ListIssues,
+  },
+  {
+    path: '/issues/create/:id_moto',
+    title: 'List of issues',
+    component: CrearIssues,
+  },
+  {
+    path: '/create/photo',
+    title: 'Create of Photo', 
+    component: CreatePhoto,
+
+  },
+  {
+    path: '/create/restaurant',
+    title: 'Create Restaurant',
+    component: CreateRestaurant,
+  },
+  {
+    path: '/list/restaurant',
+    title: 'List of Restaurants',
+    component: ListRestaurant,
+  },
+  {
+    path: '/view/restaurant/:id',
+    title: 'View Restaurant by id',
+    component: ViewRestaurant,
+  },
+  {
+    path: '/update/restaurant/:id',
+    title: 'Update Restaurant',
+    component: UpdateRestaurant,
+  },
+  {
     path: '/view/motorcycle/:id',
     title: 'View Motorcycle by id',
     component: ViewMotorcycle,
@@ -66,6 +116,26 @@ const coreRoutes = [
     path: '/update/motorcycle/:id',
     title: 'Update Motorcycles', 
     component: UpdateMotorcycle,
+  },
+  {
+    path: '/create/driver',
+    title: 'Create Driver',
+    component: CreateDriver,
+  },
+  {
+    path: '/list/driver',
+    title: 'List of Drivers',
+    component: ListDriver,
+  },
+  {
+    path: '/view/driver/:id',
+    title: 'View Driver by id',
+    component: ViewDriver,
+  },
+  {
+    path: '/update/driver/:id',
+    title: 'Update Driver',
+    component: UpdateDriver,
   },
   {
     path: '/create/motorcycle',
