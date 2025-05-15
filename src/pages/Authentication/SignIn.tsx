@@ -4,6 +4,9 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import googleService from "../../services/googleService";
 import Breadcrumb from "../../components/Breadcrumb";
+import microsoftServices from "../../services/microsoftServices";
+
+
 
 interface GoogleUser {
   name: string,
@@ -46,6 +49,24 @@ const SignIn: React.FC = () => {
       console.error('Error al procesar la respuesta de Google:', error);
     }
   };  
+  // 🔵 Nueva función para manejar Microsoft login
+  // Función de inicio de sesión de Microsoft
+  const handleMicrosoftLogin = async (response: any) => {
+    try {
+      const microsoftUser = await microsoftServices.login();
+      if (microsoftUser) {
+        console.log("Usuario de Microsoft autenticado:", microsoftUser);
+        navigate("/");
+      } else {
+        alert("No se pudo obtener el usuario de Microsoft.");
+      }
+    } catch (error) {
+      console.error("Error al iniciar sesión con Microsoft:", error);
+      alert("Ocurrió un error al iniciar sesión con Microsoft.");
+    }
+  
+  };
+
   
   return (
     <>
@@ -138,7 +159,14 @@ const SignIn: React.FC = () => {
                       </span>
                       Sign in with Google
                     </button> */}
-                    
+                    {/* Microsoft Sign-In */}
+                    <button
+                      type="button"
+                      onClick={handleMicrosoftLogin}
+                      className="w-full rounded-lg border border-blue-700 bg-blue-600 text-white py-2 hover:bg-blue-700"
+                    >
+                      Iniciar sesión con Microsoft
+                    </button>
                   </Form>
                 )}
               </Formik>

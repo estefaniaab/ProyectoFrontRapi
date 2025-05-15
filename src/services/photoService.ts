@@ -59,6 +59,19 @@ class PhotoService {
             return false;
         }
     }
+    async uploadPhoto(formData: FormData): Promise<Photo | null> {
+    try {
+        const response = await api.post<Photo>(`${API_URL}/upload`, formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data',
+            },
+        });
+        return response.data;
+    } catch (error) {
+        console.error("Error al subir la foto:", error);
+        return null;
+    }
+}
 }
 
 export const photoService = new PhotoService();

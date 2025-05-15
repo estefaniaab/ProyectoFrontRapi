@@ -15,8 +15,10 @@ const ListPhoto = () => {
 
         fetchPhotos();
     }, []);
+
     const fetchPhotos = async () => {
         const data = await photoService.getPhotos();
+        console.log("Datos obtenidos:", data); // Para depurar
         setPhotos(data);
     };
 
@@ -93,9 +95,10 @@ const ListPhoto = () => {
                                 <thead className="text-xs text-gray-700 uppercase bg-gray-50 ">
                                      <tr>
                                         <th className="border border-gray-300 p-2">ID</th>
-                                        <th className="border border-gray-300 p-2">URL</th>
+                                        <th className="border border-gray-300 p-2">Imagen</th>
                                         <th className="border border-gray-300 p-2">Descripcion</th>
-                                        <th className="border border-gray-300 p-2">Fecha</th>                                    </tr>
+                                        <th className="border border-gray-300 p-2">Fecha</th>
+                                        <th className="border border-gray-300 p-2">Acciones</th>                                    </tr>
                                 </thead>
                                 <tbody>
                                     {photos.map((item) => ( // El .map es un mapeo que parece un ciclo for, que recorre elemento por elemento de la lista
