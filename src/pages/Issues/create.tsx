@@ -24,7 +24,7 @@ const IssuesCrear = () => {
 
     const handleCreate =()=>{
         console.log("Creación de producto");
-        navigate("/create/photo")
+        navigate("/photo/create")
     }
     const handleView = (id: number) => {
         console.log(`Registro con ID: ${id}`);

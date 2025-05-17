@@ -1,8 +1,10 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Menu } from "../../models/Menu";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
+import ProductDropdown from "../Products/ProductDropdown";
+import { productService } from "../../services/productService";
 import { Product } from "../../models/Product";
 
 interface MyFormProps {
@@ -11,16 +13,21 @@ interface MyFormProps {
   handleUpdate?: (values: Menu) => void;
   readOnly?: boolean;
   menu?: Menu | null;
-  restaurantId?:number;
-  products?:Product[]
+  restaurantId?:number;  
 
 }
 
-const MenuFormValidator: React.FC<MyFormProps> = ({ mode, handleCreate, handleUpdate, readOnly, menu, restaurantId,products=[] }) => {
+const MenuFormValidator: React.FC<MyFormProps> = ({ mode, handleCreate, handleUpdate, readOnly, menu, restaurantId }) => {
   const navigate = useNavigate();
-  
+  const [products, setProducts] = useState<Product[]>([]);
 
-
+  useEffect(() => {
+  const fetchProducts = async () => {
+      const productList = await productService.getProducts();
+      setProducts(productList);
+    };
+    fetchProducts();
+  }, []);
   const handleSubmit = (formattedValues: Menu) => {
     if (mode === 1 && handleCreate) {
       handleCreate(formattedValues);
@@ -30,7 +37,7 @@ const MenuFormValidator: React.FC<MyFormProps> = ({ mode, handleCreate, handleUp
       console.error("No function provided for the current mode");
     }
   };
-
+  const effectiveRestaurantId= restaurantId || menu?.restaurant_id
   return (
     <Formik
       initialValues={
@@ -59,7 +66,7 @@ const MenuFormValidator: React.FC<MyFormProps> = ({ mode, handleCreate, handleUp
             .integer("Debe ser un número entero")
             .notOneOf([0], "Debes seleccionar un producto válido"),
         price: Yup.number()
-          .min(0, "El precio no puede ser negativo")
+          .min(1, "El precio debe ser mayor que 1")
           .required("El precio es obligatorio"),
         availability: Yup.string()
           .oneOf(["true", "false"], "La disponibilidad debe ser Sí o No")
@@ -68,6 +75,7 @@ const MenuFormValidator: React.FC<MyFormProps> = ({ mode, handleCreate, handleUp
       onSubmit={(values) => {
         // Convertimos el valor de available de string a boolean antes de enviar
         const formattedValues: Menu = {
+            id:menu?.id,
             restaurant_id: values.restaurant_id,
                     product_id: values.product_id,
                     price: values.price,
@@ -79,37 +87,17 @@ const MenuFormValidator: React.FC<MyFormProps> = ({ mode, handleCreate, handleUp
       {({ handleSubmit }) => (
         <Form onSubmit={handleSubmit} className="grid grid-cols-1 gap-4 p-6 bg-white rounded-md shadow-md">
           {/* ID del Restaurante */}
-            <div>
-                <label htmlFor="restaurant_id" className="block text-lg font-medium text-gray-700">
-                    ID del Restaurante
-                </label>
-                <Field
-                    type="number"
-                    name="restaurant_id"
-                    className="w-full border rounded-md p-2"
-                    disabled={readOnly || restaurantId !== undefined}
-                />
-                <ErrorMessage name="restaurant_id" component="p" className="text-red-500 text-sm" />
-            </div>
-
             {/* Producto */}
             <div>
                 <label htmlFor="product_id" className="block text-lg font-medium text-gray-700">
-                    Producto
+                  
                 </label>
                 {readOnly && mode === 3 ? (
                     <p className="w-full border rounded-md p-2 bg-gray-100">
                         {menu?.product?.name || `Producto ${menu?.product_id || 0}`}
                     </p>
                 ) : (
-                    <Field as="select" name="product_id" className="w-full border rounded-md p-2" disabled={readOnly}>
-                        <option value="0">Seleccione un producto</option>
-                        {products.map((product) => (
-                            <option key={product.id} value={product.id}>
-                                {product.name}
-                            </option>
-                        ))}
-                    </Field>
+                    <ProductDropdown products={products}name="product_id" disabled= {readOnly} />
                 )}
                 <ErrorMessage name="product_id" component="p" className="text-red-500 text-sm" />
             </div>
@@ -153,7 +141,7 @@ const MenuFormValidator: React.FC<MyFormProps> = ({ mode, handleCreate, handleUp
             type="button"
             className="py-2 px-6 text-black rounded-md bg-gray-500 hover:bg-gray-600"
             onClick={() => {
-              navigate("/menu/list");
+              navigate(effectiveRestaurantId ? `/menu/list/${effectiveRestaurantId}` : "/menu/list");
             }}
           >
             Volver

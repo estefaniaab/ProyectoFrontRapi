@@ -1,27 +1,19 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import Swal from "sweetalert2";
 import Breadcrumb from "../../components/Breadcrumb";
 import { Menu } from "../../models/Menu";
-import { Product } from "../../models/Product";
+
 import { menuService } from "../../services/menuService";
-import { productService } from "../../services/productService";
+
 import MenuFormValidator from "../../components/Menu/MenuFormValidator";
+import MenuContainer from "../../components/Menu/MenuContainer";
 
 const CreateMenu: React.FC = () => {
     const navigate = useNavigate();
     const { id_restaurant } = useParams<{ id_restaurant?: string }>();
     const restaurantId = id_restaurant ? parseInt(id_restaurant) : undefined;
-    const [products, setProducts] = useState<Product[]>([]);
-
-    useEffect(() => {
-        const fetchProducts = async () => {
-            const productList = await productService.getProducts();
-            setProducts(productList);
-        };
-        fetchProducts();
-    }, []);
-
+    
     const handleCreateMenu = async (menu: Omit<Menu, "id">) => {
         try {
             const createdMenu = await menuService.createMenu(menu);
@@ -53,16 +45,16 @@ const CreateMenu: React.FC = () => {
     };
 
     return (
-        <div>
+        <MenuContainer restaurantId={restaurantId}>
             <Breadcrumb pageName="Crear Menú" />
             <MenuFormValidator
                 handleCreate={handleCreateMenu}
                 mode={1}
                 readOnly={false}
                 restaurantId={restaurantId}
-                products={products}
+                
             />
-        </div>
+        </MenuContainer>
     );
 };
 

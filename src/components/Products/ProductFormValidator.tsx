@@ -69,7 +69,7 @@ const ProductFormValidator: React.FC<ProductFormProps> = ({ mode, handleCreate, 
                     )}
                     <button type="button"
                     className="py-2 px-6 text-black rounded-md bg-gray-500 hover:bg-gray-600"
-                    onClick={() => {navigate("/list/product")
+                    onClick={() => {navigate("/product/list")
                     }} >
                         Volver
                     </button>

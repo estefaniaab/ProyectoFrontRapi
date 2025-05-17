@@ -19,9 +19,9 @@ const ListDriver = () => {
         setData(drivers);
     };
 
-    const handleCreate = () => navigate("/create/driver");
-    const handleView = (id: number) => navigate("/view/driver/" + id);
-    const handleEdit = (id: number) => navigate("/update/driver/" + id);
+    const handleCreate = () => navigate("/driver/create");
+    const handleView = (id: number) => navigate("/driver/view/" + id);
+    const handleEdit = (id: number) => navigate("/driver/update/" + id);
     const handleDelete = async (id: number) => {
         Swal.fire({
             title: "Eliminación",

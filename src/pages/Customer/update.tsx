@@ -35,7 +35,7 @@ const UpdateCustomerPage = () => {
                     icon: "success",
                     timer: 3000
                 });
-                navigate("/list/customers"); // Redirección en React Router
+                navigate("/customers/list"); // Redirección en React Router
             } else {
                 Swal.fire({
                     title: "Error",

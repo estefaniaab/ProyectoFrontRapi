@@ -65,6 +65,8 @@ const CreateMenu= lazy(()=>import('../pages/Menu/create'))
 const listOrder = lazy(() => import('../pages/Order/list'))
 const createOrder = lazy(() => import('../pages/Order/create'))
 
+const UpdateMenu=lazy(()=>import('../pages/Menu/update'))
+const ViewMenu=lazy(()=>import('../pages/Menu/view'))
 
 const coreRoutes = [
   {
@@ -88,6 +90,11 @@ const coreRoutes = [
     component: ListMenu,
   },
   {
+    path: '/menu/update/:id',
+    title: 'Update menu for if', 
+    component: UpdateMenu,
+  },
+  {
     path: '/menu/list',
     title: 'List of all menu', 
     component: ListMenu,
@@ -97,9 +104,14 @@ const coreRoutes = [
     title: 'Create menu', 
     component: CreateMenu,
   },
+  {
+    path: '/menu/view/:id',
+    title: 'View menu', 
+    component: ViewMenu,
+  },
 
   {
-    path: '/list/photo',
+    path: '/photo/list',
     title: 'List of Photo', 
     component: ListPhoto,
 
@@ -115,28 +127,28 @@ const coreRoutes = [
     component: CrearIssues,
   },
   {
-    path: '/create/photo',
+    path: '/photo/create',
     title: 'Create of Photo', 
     component: CreatePhoto,
 
   },
   {
-    path: '/create/restaurant',
+    path: '/restaurant/create',
     title: 'Create Restaurant',
     component: CreateRestaurant,
   },
   {
-    path: '/list/restaurant',
+    path: '/restaurant/list',
     title: 'List of Restaurants',
     component: ListRestaurant,
   },
   {
-    path: '/view/restaurant/:id',
+    path: '/restaurant/view/:id',
     title: 'View Restaurant by id',
     component: ViewRestaurant,
   },
   {
-    path: '/update/restaurant/:id',
+    path: '/restaurant/update/:id',
     title: 'Update Restaurant',
     component: UpdateRestaurant,
   },
@@ -161,63 +173,63 @@ const coreRoutes = [
     component: ListMotorcycle,
   },
   {
-    path: '/create/driver',
+    path: '/driver/create',
     title: 'Create Driver',
     component: CreateDriver,
   },
   {
-    path: '/list/driver',
+    path: '/driver/list',
     title: 'List of Drivers',
     component: ListDriver,
   },
   {
-    path: '/view/driver/:id',
+    path: '/driver/view/:id',
     title: 'View Driver by id',
     component: ViewDriver,
   },
   {
-    path: '/update/driver/:id',
+    path: '/driver/update/:id',
     title: 'Update Driver',
     component: UpdateDriver,
   },
   
   {
-    path: "/create/product",
+    path: "/product/create",
     title: "Create Product",
     component: CreateProduct,
   },
   {
-    path: "/list/product",
+    path: "/product/list",
     title: "List Products",
     component: ListProduct,
   },
   {
-    path: "/update/product/:id",
+    path: "/product/update/:id",
     title: "Update Product",
     component: UpdateProduct,
   },
   {
-    path: "/view/product/:id",
+    path: "/product/view/:id",
     title: "View Product",
     component: ViewProduct,
   },
   {
-    path: '/list/customers',
+    path: '/customers/list',
     title: 'List of Customers',
     component: ListCustomers,
   },
   {
-    path: '/create/customers',
+    path: '/customers/create',
     title: 'Create Customers',
     component: CreateCustomer,
   },
   {
-    path: '/update/customers/:id',
+    path: '/customers/update/:id',
     title: 'Update Customers',
     component: UpdateCustomer
   },
   {
-    path: '/view/customers/:id',
+    path: '/customers/view/:id',
     title: 'View Customer by id',
     component: ViewCustomer
   },

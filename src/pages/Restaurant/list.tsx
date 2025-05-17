@@ -19,9 +19,9 @@ const ListRestaurant = () => {
         setData(restaurants);
     };
 
-    const handleCreate = () => navigate("/create/restaurant");
-    const handleView = (id: number) => navigate("/view/restaurant/" + id);
-    const handleEdit = (id: number) => navigate("/update/restaurant/" + id);
+    const handleCreate = () => navigate("/restaurant/create");
+    const handleView = (id: number) => navigate("/restaurant/view/" + id);
+    const handleEdit = (id: number) => navigate("/restaurant/update/" + id);
     const handleShowMenu=(id:number)=> navigate(`/menu/list/${id}`)
     const handleDelete = async (id: number) => {
         Swal.fire({

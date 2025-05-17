@@ -108,7 +108,7 @@ const PhotoFormValidator: React.FC<PhotoFormProps> = ({ mode, handleCreate, hand
                     <button
                         type="button"
                         className="py-2 px-6 text-black rounded-md bg-gray-500 hover:bg-gray-600"
-                        onClick={() => navigate("/list/photo")}
+                        onClick={() => navigate("/photo/list")}
                     >
                         Volver
                     </button>

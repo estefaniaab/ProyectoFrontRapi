@@ -86,7 +86,7 @@ const DriverFormValidator: React.FC<MyFormProps> = ({ mode, handleCreate, handle
                     <button
                         type="button"
                         className="py-2 px-6 text-black rounded-md bg-gray-500 hover:bg-gray-600"
-                        onClick={() => navigate("/list/driver")}
+                        onClick={() => navigate("/driver/list")}
                     >
                         Volver
                     </button>

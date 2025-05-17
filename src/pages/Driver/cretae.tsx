@@ -18,7 +18,7 @@ const CreateDriver = () => {
                     icon: "success",
                     timer: 3000
                 });
-                navigate('/list/driver');
+                navigate('/driver/list');
             } else {
                 Swal.fire({
                     title: "Error",
