@@ -24,15 +24,15 @@
         //funciones para manajar acciones
         const handleCreate = () => {
             console.log("Vamos a crear una motocicleta");
-            navigate("/create/motorcycle"); // Redireccionamos a la parte de create customers
+            navigate("/motorcycle/crear"); // Redireccionamos a la parte de create customers
         }
         const handleView = (id: number) => {
             console.log(`Registro con ID: ${id}`);
-            navigate("/view/motorcycle/" + id);
+            navigate("/motorcycle/view/" + id);
         };
         const handleEdit = (id: number) => {
             console.log(`Editar registro ${id}`);
-            navigate("/update/motorcycle/" + id)
+            navigate("/motorcycle/update/" + id)
         }
         const handleShowIssues =(id:number)=>{
             navigate(`/issues/list/${id}`)
@@ -124,9 +124,9 @@
                                                     </button>
                                                     <button
                                                         onClick={() => handleShowIssues(item.id ? item.id : 0)}
-                                                        className="text-yellow-600 dark:text-yellow-500"
+                                                        className="text-yellow-600 dark:text-yellow-500 font-semibold"
                                                     >
-                                                        <Edit size={20} /> {/* Ícono de editar */}
+                                                        Averías
                                                     </button>
                                                 </td>
                                             </tr>

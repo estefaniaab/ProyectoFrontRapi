@@ -59,12 +59,32 @@ const ViewRestaurant= lazy(()=> import('../pages/Restaurant/view'))
 const ListIssues = lazy(()=> import('../pages/Issues/list'))
 const CrearIssues =lazy(()=>import('../pages/Issues/create'))
 
+const ListMenu= lazy(()=>import ('../pages/Menu/list'))
+const CreateMenu= lazy(()=>import('../pages/Menu/create'))
+
+
 const coreRoutes = [
   {
     path: '/demo',
     title: 'Demo',
     component: Demo,
   },
+  {
+    path: '/menu/list/:id_restaurant',
+    title: 'List of restuarant menu ', 
+    component: ListMenu,
+  },
+  {
+    path: '/menu/list',
+    title: 'List of all menu', 
+    component: ListMenu,
+  },
+  {
+    path: '/menu/create/:id_restaurant',
+    title: 'Create menu', 
+    component: CreateMenu,
+  },
+
   {
     path: '/list/photo',
     title: 'List of Photo', 
@@ -108,14 +128,24 @@ const coreRoutes = [
     component: UpdateRestaurant,
   },
   {
-    path: '/view/motorcycle/:id',
+    path: '/motorcycle/view/:id',
     title: 'View Motorcycle by id',
     component: ViewMotorcycle,
   },
   {
-    path: '/update/motorcycle/:id',
+    path: '/motorcycle/update/:id',
     title: 'Update Motorcycles', 
     component: UpdateMotorcycle,
+  },
+  {
+    path: '/motorcycle/create',
+    title: 'Create Motorcycle', 
+    component: CreateMotorcycle,
+  },
+  {
+    path: '/motorcycle/list',
+    title: 'List of Motorcycle', 
+    component: ListMotorcycle,
   },
   {
     path: '/create/driver',
@@ -137,16 +167,7 @@ const coreRoutes = [
     title: 'Update Driver',
     component: UpdateDriver,
   },
-  {
-    path: '/create/motorcycle',
-    title: 'Create Motorcycle', 
-    component: CreateMotorcycle,
-  },
-  {
-    path: '/list/motorcycle',
-    title: 'List of Motorcycle', 
-    component: ListMotorcycle,
-  },
+  
   {
     path: "/create/product",
     title: "Create Product",

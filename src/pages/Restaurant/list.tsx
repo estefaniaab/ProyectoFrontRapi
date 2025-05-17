@@ -22,6 +22,7 @@ const ListRestaurant = () => {
     const handleCreate = () => navigate("/create/restaurant");
     const handleView = (id: number) => navigate("/view/restaurant/" + id);
     const handleEdit = (id: number) => navigate("/update/restaurant/" + id);
+    const handleShowMenu=(id:number)=> navigate(`/menu/list/${id}`)
     const handleDelete = async (id: number) => {
         Swal.fire({
             title: "Eliminación",
@@ -78,6 +79,7 @@ const ListRestaurant = () => {
                                 <tbody>
                                     {data.map((item) => (
                                         <tr key={item.id} className="odd:bg-white even:bg-gray-50 border-b">
+                                            
                                             <td className="px-6 py-4">{item.name}</td>
                                             <td className="px-6 py-4">{item.address}</td>
                                             <td className="px-6 py-4">{item.phone}</td>
@@ -86,6 +88,12 @@ const ListRestaurant = () => {
                                                 <button onClick={() => handleView(item.id || 0)} className="text-blue-600"><Eye size={20} /></button>
                                                 <button onClick={() => handleEdit(item.id || 0)} className="text-yellow-600"><Edit size={20} /></button>
                                                 <button onClick={() => item.id && handleDelete(item.id)} className="text-red-600"><Trash2 size={20} /></button>
+                                                <button
+                                                    onClick={() => handleShowMenu(item.id ? item.id : 0)}
+                                                    className="text-yellow-600 dark:text-yellow-500 font-semibold"
+                                                >
+                                                    Menu
+                                                </button>
                                             </td>
                                         </tr>
                                     ))}

@@ -24,8 +24,8 @@ const App = () => {
                 })
 
             // Aquí iría la lógica para crear la motocicleta
-            console.log('Motorcycle creado con exito:', motorcycle);
-            navigate('/list/motorcycle'); // Volvemos a la pagina de listado
+            console.log('Motocicleta creado con exito:', motorcycle);
+            navigate('/motorcycle/list'); // Volvemos a la pagina de listado
             }
             else {
                 Swal.fire({
@@ -42,8 +42,8 @@ const App = () => {
     return (
         <div>
             {/* Formulario para crear un nuevo customer */}
-            <h2>Create Motorcycle</h2>
-            <Breadcrumb pageName="Crear Motorcycle" />
+            <h2>Crear Motocicleta</h2>
+            <Breadcrumb pageName="Crear Motocicleta" />
             <MotorcycleFormValidator
                 handleCreate={handleCreateMotorcycle}
                 mode={1} // Creación
