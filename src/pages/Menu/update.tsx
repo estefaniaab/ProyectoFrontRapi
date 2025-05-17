@@ -6,11 +6,14 @@ import { menuService } from "../../services/menuService";
 
 import Breadcrumb from "../../components/Breadcrumb";
 import MenuFormValidator from "../../components/Menu/MenuFormValidator";
+import MenuContainer from "../../components/Menu/MenuContainer";
 
 const UpdateMenu: React.FC = () => {
   const navigate = useNavigate();
   const { id } = useParams<{ id: string }>();
   const [menu, setMenu] = useState<Menu | null>(null);
+
+  
 
   useEffect(() => {
     const fetchMenu = async () => {
@@ -32,7 +35,7 @@ const UpdateMenu: React.FC = () => {
           icon: "success",
           timer: 3000,
         });
-        navigate("/menu/list");
+        navigate(menu?.restaurant_id ? `/menu/list/${menu.restaurant_id}` : "/menu/list");
       } else {
         Swal.fire({
           title: "Error",
@@ -56,10 +59,10 @@ const UpdateMenu: React.FC = () => {
   }
 
   return (
-    <div>
+    <MenuContainer restaurantId={menu.restaurant_id}>
       <Breadcrumb pageName="Actualizar Menú" />
       <MenuFormValidator handleUpdate={handleUpdateMenu} mode={2} readOnly={false} menu={menu} />
-    </div>
+    </MenuContainer>
   );
 };
 

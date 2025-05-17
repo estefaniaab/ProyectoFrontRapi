@@ -61,7 +61,8 @@ const CrearIssues =lazy(()=>import('../pages/Issues/create'))
 
 const ListMenu= lazy(()=>import ('../pages/Menu/list'))
 const CreateMenu= lazy(()=>import('../pages/Menu/create'))
-
+const UpdateMenu=lazy(()=>import('../pages/Menu/update'))
+const ViewMenu=lazy(()=>import('../pages/Menu/view'))
 
 const coreRoutes = [
   {
@@ -75,6 +76,11 @@ const coreRoutes = [
     component: ListMenu,
   },
   {
+    path: '/menu/update/:id',
+    title: 'Update menu for if', 
+    component: UpdateMenu,
+  },
+  {
     path: '/menu/list',
     title: 'List of all menu', 
     component: ListMenu,
@@ -83,6 +89,11 @@ const coreRoutes = [
     path: '/menu/create/:id_restaurant',
     title: 'Create menu', 
     component: CreateMenu,
+  },
+  {
+    path: '/menu/view/:id',
+    title: 'View menu', 
+    component: ViewMenu,
   },
 
   {

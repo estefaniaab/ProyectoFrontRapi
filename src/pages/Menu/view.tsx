@@ -5,6 +5,7 @@ import { menuService } from "../../services/menuService";
 
 import Breadcrumb from "../../components/Breadcrumb";
 import MenuFormValidator from "../../components/Menu/MenuFormValidator";
+import MenuContainer from "../../components/Menu/MenuContainer";
 
 const ViewMenu: React.FC = () => {
   const { id } = useParams<{ id: string }>();
@@ -26,8 +27,11 @@ const ViewMenu: React.FC = () => {
 
   return (
     <>
-      <Breadcrumb pageName="Ver Menú" />
-      <MenuFormValidator mode={2} menu={menu} readOnly={true} />
+        <MenuContainer  restaurantId={menu.restaurant_id}>
+            <Breadcrumb pageName="Ver Menú" />
+            <MenuFormValidator mode={2} menu={menu} readOnly={true} />
+        </MenuContainer>
+      
     </>
   );
 };

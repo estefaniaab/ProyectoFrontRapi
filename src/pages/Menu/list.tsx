@@ -5,8 +5,11 @@ import Swal from "sweetalert2";
 import { Menu } from "../../models/Menu";
 import { menuService } from "../../services/menuService";
 
+import MenuContainer from "../../components/Menu/MenuContainer";
+
 const ListMenu: React.FC = () => {
   const {id_restaurant}=useParams()
+  const restaurantId = id_restaurant ? parseInt(id_restaurant) : undefined;
   const navigate = useNavigate();
 
   const [data, setData] = useState<Menu[]>([]);
@@ -18,8 +21,7 @@ const ListMenu: React.FC = () => {
 
   const fetchData = async () => {
     let menus:Menu[]=[];
-    if (id_restaurant){
-        const restaurantId=parseInt(id_restaurant);
+    if (restaurantId){
         if (!isNaN(restaurantId)) {
                 menus = await menuService.getMenusByRestaurantId(restaurantId);
             } else {
@@ -33,8 +35,8 @@ const ListMenu: React.FC = () => {
   };
 
   const handleCreate = () => {
-    if(id_restaurant){
-        navigate(`/menu/create/${id_restaurant}`);
+    if(restaurantId){
+        navigate(`/menu/create/${restaurantId}`);
     } else{
        Swal.fire({
             title: "Error",
@@ -89,8 +91,8 @@ const ListMenu: React.FC = () => {
   };
 
   return (
-    <div className="grid grid-cols-1 gap-9">
-      <div className="flex flex-col gap-9">
+    <MenuContainer restaurantId={restaurantId}>
+          
         <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
           <div className="border-b border-stroke px-6.5 py-4 dark:border-strokedark">
             <h3 className="font-medium text-black dark:text-white">Listado de Menús</h3>
@@ -156,8 +158,7 @@ const ListMenu: React.FC = () => {
             </div>
           </div>
         </div>
-      </div>
-    </div>
+    </MenuContainer>
   );
 };
 
