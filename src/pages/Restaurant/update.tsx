@@ -31,7 +31,7 @@ const UpdateRestaurant = () => {
                     icon: "success",
                     timer: 3000
                 });
-                navigate("/list/restaurant");
+                navigate("/restaurant/list");
             } else {
                 Swal.fire({
                     title: "Error",

@@ -22,7 +22,7 @@ const App = () => {
                     timer: 3000
                 })
                 console.log('Customer creado con exito:', createdCustomer);
-                navigate('/list/customers'); // Volvemos a la pagina de listado
+                navigate('/customers/list'); // Volvemos a la pagina de listado
             } else {
                 Swal.fire({
                     title: "Error",

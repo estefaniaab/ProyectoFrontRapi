@@ -27,7 +27,7 @@ const App = () => {
 
             // Aquí iría la lógica para crear la motocicleta
             console.log('Producto creado con exito:', product);
-            navigate('/list/product'); // Volvemos a la pagina de listado
+            navigate('/product/list'); // Volvemos a la pagina de listado
             }
             else {
                 Swal.fire({

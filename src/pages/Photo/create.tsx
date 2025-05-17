@@ -21,7 +21,7 @@ const CreatePhoto = () => {
                 });
 
                 console.log("Foto creada con éxito:", createdPhoto);
-                navigate("/list/photo"); // Volvemos a la página de listado
+                navigate("/photo/list"); // Volvemos a la página de listado
             } else {
                 Swal.fire({
                     title: "Error",

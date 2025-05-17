@@ -37,7 +37,7 @@ const UpdateProduct = () => {
                     icon: "success",
                     timer: 3000
                 });
-                navigate("/list/product"); // Redirección en React Router
+                navigate("/product/list"); // Redirección en React Router
             } else {
                 Swal.fire({
                     title: "Error",

@@ -27,17 +27,17 @@ const ListCustomers = () => {
     // Fucnioes para manajar acciones
     const handleCreate = () => {
         console.log("Vamos a crear un usuario");
-        navigate("/create/customers"); // Redireccionamos a la parte de create customers
+        navigate("/customers/create"); // Redireccionamos a la parte de create customers
         
     }
     const handleView = (id: number) => {
         console.log(`Registro con ID: ${id}`);
-        navigate("/view/customers/" + id);
+        navigate("/customers/view/" + id);
     };
 
     const handleEdit = (id: number) => {
         console.log(`Editar registro ${id}`);
-        navigate("/update/customers/" + id)
+        navigate("/customers/update/" + id)
         
     }
 

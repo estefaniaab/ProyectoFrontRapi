@@ -76,7 +76,7 @@ const RestaurantFormValidator: React.FC<MyFormProps> = ({ mode, handleCreate, ha
                     <button
                         type="button"
                         className="py-2 px-6 text-black rounded-md bg-gray-500 hover:bg-gray-600"
-                        onClick={() => navigate("/list/restaurant")}
+                        onClick={() => navigate("/restaurant/list")}
                     >
                         Volver
                     </button>

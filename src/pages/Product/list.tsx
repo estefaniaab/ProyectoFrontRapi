@@ -25,15 +25,15 @@ const ListProduct = () => {
     //funciones para manajar acciones
     const handleCreate = () => {
         console.log("Vamos a crear un producto");
-        navigate("/create/product"); // Redireccionamos a la parte de create customers
+        navigate("/product/create"); // Redireccionamos a la parte de create customers
     }
     const handleView = (id: number) => {
         console.log(`Registro con ID: ${id}`);
-        navigate("/view/product/" + id);
+        navigate("/product/view/" + id);
     };
     const handleEdit = (id: number) => {
         console.log(`Editar registro ${id}`);
-        navigate("/update/product/" + id)
+        navigate("/product/update/" + id)
     }
     const handleDelete = async (id: number) => {
         console.log(`Eliminando producto ${id}`);

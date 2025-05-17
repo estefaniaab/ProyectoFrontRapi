@@ -66,7 +66,7 @@ const MenuFormValidator: React.FC<MyFormProps> = ({ mode, handleCreate, handleUp
             .integer("Debe ser un número entero")
             .notOneOf([0], "Debes seleccionar un producto válido"),
         price: Yup.number()
-          .min(0, "El precio no puede ser negativo")
+          .min(1, "El precio debe ser mayor que 1")
           .required("El precio es obligatorio"),
         availability: Yup.string()
           .oneOf(["true", "false"], "La disponibilidad debe ser Sí o No")
