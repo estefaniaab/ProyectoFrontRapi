@@ -7,6 +7,8 @@ import Breadcrumb from "../../components/Breadcrumb";
 import { setUserInfo } from "../../store/userSlice";
 import { useAppDispatch } from "../../hooks/useDispatch"; // Hook tipado
 import { GithubAuth } from "../../firebase/firebase"; // Función github
+import { loginUser } from "../../models/usuarioLogin";
+import securityService from "../../services/securityService";
 
 
 const SignIn: React.FC = () => {
@@ -29,13 +31,33 @@ const SignIn: React.FC = () => {
 
   }, [dispatch, navigate]);
 
+  const handleLogin = async (user: loginUser) => {
+    console.log("Usuario" + JSON.stringify(user));
+    try {
+      const response = await securityService.login(user)
+      console.log("Usuario autenticado: ", response);
+      navigate("/");
+
+      
+    } catch (error) {
+      console.error('Error al iniciar sesión con login normal', error);
+    }
+  }
+
   const handleGoogleLoginResponse = (response: any) => {
     try {
       const credential = response.credential;
       if (credential) {
         const user = googleService.parseJwt(credential);
-        if (user) {
-          localStorage.setItem('loginUser', JSON.stringify(user));
+        const logedUser = {
+          name: user?.name,
+          email: user?.email,
+          picture: user?.picture,
+          token: credential,
+        }
+        console.log('Token de Google:', credential);
+        if (logedUser && user) {
+          localStorage.setItem('loginUser', JSON.stringify(logedUser));
           console.log('Usuario de Google autenticado (con servicio):', user);
           dispatch(setUserInfo(user)); // Despachar al store de Redux
           navigate("/");
@@ -54,12 +76,15 @@ const SignIn: React.FC = () => {
       if (result?.user) {
         const { displayName, email, photoURL, uid } = result.user;
         const nombreUsuario = (result?.user as any)?.reloadUserInfo?.screenName;  // Porque el displayName me estaba saliendo Null, entonces toco acceder a este componente
+        const token = result?.accessToken;
+        console.log("Token de Github", token);
         const githubUser = {
           name: displayName || nombreUsuario ||  'Usuario de GitHub',
           email: email || "",
           picture: photoURL || "",
           uid: uid,
-          provider: 'github'
+          provider: 'github',
+          token: token, // Token de acceso
         };
         localStorage.setItem('loginUser', JSON.stringify(githubUser));
         console.log("Usuario de Github autenticado: ", githubUser);
@@ -94,7 +119,8 @@ const SignIn: React.FC = () => {
                   password: Yup.string().required("La contraseña es obligatoria"),
                 })}
                 onSubmit={(values) => {
-                  const formattedValues = { ...values };  // Formateo adicional si es necesario
+                  const formattedValues = { ...values, name: "", picture: "" };  // Formateo adicional si es necesario
+                  handleLogin(formattedValues);
                 }}
 
               >

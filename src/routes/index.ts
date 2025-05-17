@@ -62,12 +62,25 @@ const CrearIssues =lazy(()=>import('../pages/Issues/create'))
 const ListMenu= lazy(()=>import ('../pages/Menu/list'))
 const CreateMenu= lazy(()=>import('../pages/Menu/create'))
 
+const listOrder = lazy(() => import('../pages/Order/list'))
+const createOrder = lazy(() => import('../pages/Order/create'))
+
 
 const coreRoutes = [
   {
     path: '/demo',
     title: 'Demo',
     component: Demo,
+  },
+  {
+    path: '/order/list',
+    title: 'List of orders',
+    component: listOrder,
+  },
+  {
+    path: '/order/create',
+    title: 'Create Order',
+    component: createOrder,
   },
   {
     path: '/menu/list/:id_restaurant',

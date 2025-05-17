@@ -87,7 +87,8 @@ const ListCustomers = () => {
                             <table className="w-full text-sm text-left rtl:text-right text-gray-500 ">
                                 <thead className="text-xs text-gray-700 uppercase bg-gray-50 ">
                                     <tr>
-                                        <th scope="col" className="px-6 py-3">P</th>
+                                        <th scope="col" className="px-6 py-3">ID</th>
+                                        <th scope="col" className="px-6 py-3">Nombre</th>
                                         <th scope="col" className="px-6 py-3">Correo</th>
                                         <th scope="col" className="px-6 py-3">Teléfono</th>
                                     </tr>
@@ -95,6 +96,7 @@ const ListCustomers = () => {
                                 <tbody>
                                     {data.map((item) => ( // El .map es un mapeo que parece un ciclo for, que recorre elemento por elemento de la lista
                                         <tr key={item.id} className="odd:bg-whiteodd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700 border-gray-200">
+                                            <td className="px-6 py-4 font-medium text-gray-900 dark:text-white">{item.id}</td>
                                             <td className="px-6 py-4 font-medium text-gray-900 dark:text-white">{item.name}</td>
                                             <td className="px-6 py-4">{item.email}</td>
                                             <td className="px-6 py-4">{item.phone}</td>

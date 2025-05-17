@@ -1,4 +1,3 @@
-
 import axios from "axios";
 
 // Lista de rutas que no deben ser interceptadas
@@ -12,7 +11,7 @@ const api = axios.create({
 // Interceptor de solicitud
 api.interceptors.request.use(
     (config) => {
-        const user = JSON.parse(localStorage.getItem("user") || "{}");
+        const user = JSON.parse(localStorage.getItem("loginUser") || "{}");
         // Verificar si la URL está en la lista de excluidas
         if (EXCLUDED_ROUTES.some((route) => config.url?.includes(route)) || !user) {
             return config;
