@@ -21,6 +21,7 @@ const CreateOrder: React.FC = () => {
     const [menus, setMenus] = useState<Menu[]>([]);
     const [motorcycles, setMotorcycles] = useState<Motorcycle[]>([]);
     const [selectedRestaurantId, setSelectedRestaurantId] = useState<number | undefined>();
+    const [audio] = useState(new Audio('/Ping_sound_effect.mp3'));
 
     useEffect(() => {
         const fetchInitialData = async () => {
@@ -56,6 +57,38 @@ const CreateOrder: React.FC = () => {
         console.log("Selected restaurant ID:", restaurantId); // Agrega este log
     };
 
+    function mostrarNotificacionNuevoPedido() {
+        if ('Notification' in window) {
+            console.log('Este navegador soporta notificaciones');
+            if (Notification.permission === 'granted') {
+                console.log('Mostrando notificación...'); 
+                new Notification("Nuevo Pedido Asignado", {
+                    body: "¡Se ha creado un nuevo pedido! \n¡Ya esta en camino!",
+                    icon: '/favicon.ico',
+
+                });
+                audio.play(); // Reproduce el archivo de sonido
+            } else if (Notification.permission !== 'denied') {
+                Notification.requestPermission().then(permission => {
+                    if (permission === 'granted') {
+                        console.log('Permiso de notificación concedido. Mostrando notificación...'); 
+                        new Notification("Nuevo Pedido Asignado", {
+                            body: "¡Se ha creado un nuevo pedido!",
+                            icon: '/favicon.ico',
+                        });
+                        audio.play();
+                    } else {
+                        console.log('Permiso de notificación denegado o ignorado.', permission);
+                    }
+                });
+            } else {
+                console.log('El permiso de notificación ha sido denegado.');
+            }
+        } else {
+            console.log('Este navegador no soporta notificaciones');
+        }
+    }   
+
     const handleCreateOrder = async (orderData: Omit<Order, "id">) => {
         try {
             const createdOrder = await orderService.createOrder(orderData);
@@ -66,6 +99,7 @@ const CreateOrder: React.FC = () => {
                     icon: "success",
                     timer: 3000,
                 });
+                mostrarNotificacionNuevoPedido(); // Notificación al crear peiddo
                 navigate("/order/list");
             } else {
                 Swal.fire({

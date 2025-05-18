@@ -2,12 +2,11 @@ import Breadcrumb from '../components/Breadcrumb';
 import CoverOne from '../images/cover/cover-01.png';
 import userSix from '../images/user/user-06.png';
 import { useState, useEffect } from "react";
-import { User } from "../models/User";
-import { userService } from "../services/userService";
+import { loginUser } from '../models/usuarioLogin';
 
 const Profile = () => {
   //Variable reactiva de usuario
-  const [user, setUser] = useState<User>();
+  const [user, setUser] = useState<loginUser>();
   //Lógica de programación
   useEffect(() => {
     fetchData();
@@ -15,9 +14,10 @@ const Profile = () => {
 
   // 🔹 Obtiene los datos de los usuarios
   const fetchData = async () => {
-    const user: User | null = await userService.getUserById(1);
+    const user = localStorage.getItem('loginUser');
     if (user) {
-      setUser(user);
+      const lgnUser = JSON.parse(user)
+      setUser(lgnUser);
     }
   };
   //Html de la página
@@ -68,7 +68,7 @@ const Profile = () => {
         <div className="px-4 pb-6 text-center lg:pb-8 xl:pb-11.5">
           <div className="relative z-30 mx-auto -mt-22 h-30 w-full max-w-30 rounded-full bg-white/20 p-1 backdrop-blur sm:h-44 sm:max-w-44 sm:p-3">
             <div className="relative drop-shadow-2">
-              <img src={userSix} alt="profile" />
+              <img src={user?.picture || userSix} alt="profile" className="w-full h-full object-cover rounded-full"/>
               <label
                 htmlFor="profile"
                 className="absolute bottom-0 right-0 flex h-8.5 w-8.5 cursor-pointer items-center justify-center rounded-full bg-primary text-white hover:bg-opacity-90 sm:bottom-2 sm:right-2"

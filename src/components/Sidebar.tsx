@@ -317,6 +317,57 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
               </li>
               {/* <!-- Menu Item Customer --> */}
 
+              {/* <!-- Menu Item Order -->*/}
+              <li>
+                <NavLink
+                  to="/order/list"
+                  className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
+                    pathname.includes('order') && 'bg-graydark dark:bg-meta-4'
+                  }`}
+                >
+                  <svg 
+                    xmlns="http://www.w3.org/2000/svg" 
+                    width="18" 
+                    height="18" 
+                    viewBox="0 0 18 18" 
+                    fill="none" 
+                    stroke="currentColor" 
+                    stroke-width="2" 
+                    stroke-linecap="round" 
+                    stroke-linejoin="round" 
+                    className="lucide lucide-layout-list-icon lucide-layout-list"
+                  >
+                    <rect 
+                      width="5" 
+                      height="5" 
+                      x="4" 
+                      y="2" 
+                      rx="1"
+                    />
+                    <rect 
+                      width="5" 
+                      height="5" 
+                      x="4" 
+                      y="12" 
+                      rx="1"
+                    />
+                    <path 
+                      d="M14 4h7"
+                    />
+                    <path 
+                      d="M14 9h7"
+                    />
+                    <path 
+                      d="M14 15h7"
+                    />
+                    <path 
+                      d="M14 20h7"/>
+                    </svg>
+                  Orden
+                </NavLink>
+              </li>
+              {/* <!-- Menu Item Order --> */}
+
               {/* <!-- Menu Item Profile --> */}
               <li>
                 <NavLink
