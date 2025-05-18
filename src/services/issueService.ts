@@ -1,5 +1,5 @@
 import api from "../interceptors/axiosInterceptors";
-import { Issue } from "../models/Issue";
+import { Issue } from "../models/Issues";
 
 const API_URL = import.meta.env.VITE_API_URL;
 

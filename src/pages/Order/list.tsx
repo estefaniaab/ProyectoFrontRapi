@@ -6,7 +6,6 @@ import { Order } from "../../models/Order";
 import { orderService } from "../../services/orderService";
 import { Motorcycle } from "../../models/Motorcycle";
 import { motorcycleService } from "../../services/motorcycleServices";
-import api from "../../interceptors/axiosInterceptors";
 
 
 const ListOrder: React.FC = () => {
@@ -129,7 +128,8 @@ const ListOrder: React.FC = () => {
                     <tr
                       key={order.id}
                       className="odd:bg-whiteodd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700 border-gray-200"
-                    > <td className="px-6 py-4 font-medium text-gray-900 dark:text-white">{order.id}</td>
+                    >
+                      <td className="px-6 py-4 font-medium text-gray-900 dark:text-white">{order.id}</td>
                       <td className="px-6 py-4 font-medium text-gray-900 dark:text-white">{order.quantity}</td>
                       <td className="px-6 py-4">{order.total_price}</td>
                       <td className="px-6 py-4">{order.status}</td>
