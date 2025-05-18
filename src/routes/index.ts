@@ -74,11 +74,36 @@ const updateOrder = lazy(() => import('../pages/Order/update'))
 const UpdateMenu=lazy(()=>import('../pages/Menu/update'))
 const ViewMenu=lazy(()=>import('../pages/Menu/view'))
 
+const ListShift=lazy(()=>import('../pages/Shift/list'))
+const CreateShift=lazy(()=>import('../pages/Shift/create'))
+const UpdateShift=lazy(()=>import('../pages/Shift/update'))
+const ViewShift=lazy(()=>import('../pages/Shift/view'))
+
 const coreRoutes = [
   {
     path: '/demo',
     title: 'Demo',
     component: Demo,
+  },
+  {
+    path: '/shift/list',
+    title: 'List of shift',
+    component: ListShift,
+  },
+  {
+    path: '/shift/create',
+    title: 'Cerar of shift',
+    component: CreateShift,
+  },
+  {
+    path: '/shift/update/:id',
+    title: 'Update of shift',
+    component: UpdateShift,
+  },
+  {
+    path: '/shift/view/:id',
+    title: 'View of shift',
+    component: ViewShift,
   },
   {
     path: '/order/list',
@@ -132,6 +157,11 @@ const coreRoutes = [
     component: ListPhoto,
   },
   {
+    path: '/photo/list',
+    title: 'List of Photos',
+    component: ListPhoto,
+  },
+  {
     path: '/photo/create/:issue_id',
     title: 'Create Photo',
     component: CreatePhoto,
@@ -148,6 +178,11 @@ const coreRoutes = [
   },
   {
     path: '/issues/list/:motorcycle_id',
+    title: 'List of Issues',
+    component: ListIssue,
+  },
+  {
+    path: '/issues/list',
     title: 'List of Issues',
     component: ListIssue,
   },

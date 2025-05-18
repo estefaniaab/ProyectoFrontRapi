@@ -6,11 +6,14 @@ import { Photo } from "../../models/Photo";
 import { photoService } from "../../services/photoService";
 import PhotoContainerWithHeader from "../../components/Photo/PhotoContainerWhitHeader";
 
-
 const ListPhoto: React.FC = () => {
     const navigate = useNavigate();
-    const { issue_id } = useParams<{ issue_id: string }>();
-    const issueId = parseInt(issue_id || "0");
+    const { issue_id } = useParams<{ issue_id?: string }>();
+
+    
+    const issueId = issue_id ? parseInt(issue_id, 10) : undefined;
+
+    
     const [photos, setPhotos] = useState<Photo[]>([]);
 
     useEffect(() => {
@@ -18,21 +21,43 @@ const ListPhoto: React.FC = () => {
     }, [issueId]);
 
     const fetchPhotos = async () => {
-        const data = await photoService.getPhotos();
-        const filteredPhotos = data.filter((photo) => photo.issue_id === issueId);
-        setPhotos(filteredPhotos);
+        let photos: Photo[] = [];
+
+        if (issueId) {
+            if(!isNaN(issueId)){
+                photos = await photoService.getPhotosByIssueId(issueId);
+            }else{
+                console.error("ID de la averia inválido:", issue_id);
+            }
+            
+            
+        } else {
+            photos = await photoService.getPhotos(); // 
+        }
+
+        console.log("Fotos obtenidas:", photos); // 
+        setPhotos(photos);
     };
 
     const handleCreate = () => {
-        navigate(`/photo/create/${issueId}`);
+        if (issueId) {
+            navigate(`/photo/create/${issueId}`);
+        } else {
+            Swal.fire({
+                title: "Error",
+                text: "Para crear una foto se debe hacer desde averías.",
+                icon: "error",
+                timer: 3000,
+            });
+        }
     };
 
     const handleView = (id: number) => {
-        navigate(`/photo/view/${id}`);
+        if (id) navigate(`/photo/view/${id}`);
     };
 
     const handleEdit = (id: number) => {
-        navigate(`/photo/update/${id}`);
+        if (id) navigate(`/photo/update/${id}`);
     };
 
     const handleDelete = async (id: number) => {
@@ -68,8 +93,9 @@ const ListPhoto: React.FC = () => {
         });
     };
 
-    const getPublicImageUrl = (imagePath: string) => {
-        const filename = imagePath.split("\\").pop();
+    const getPublicImageUrl = (imagePath: string | undefined) => {
+        if (!imagePath) return `${import.meta.env.VITE_API_URL}/uploads/default.png`;
+        const filename = imagePath.split("\\").pop() || "default.png";
         return `${import.meta.env.VITE_API_URL}/uploads/${filename}`;
     };
 
@@ -113,7 +139,11 @@ const ListPhoto: React.FC = () => {
                                                     />
                                                 </td>
                                                 <td className="px-6 py-4">{item.caption}</td>
-                                                <td className="px-6 py-4">{new Date(item.taken_at).toLocaleString()}</td>
+                                                <td className="px-6 py-4">
+                                                    {item.taken_at
+                                                        ? new Date(item.taken_at).toLocaleString()
+                                                        : "Fecha inválida"}
+                                                </td>
                                                 <td className="px-6 py-4 space-x-2">
                                                     <button
                                                         onClick={() => handleView(item.id || 0)}
