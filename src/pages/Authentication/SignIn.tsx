@@ -7,9 +7,10 @@ import Breadcrumb from "../../components/Breadcrumb";
 import { setUserInfo } from "../../store/userSlice";
 import { useAppDispatch } from "../../hooks/useDispatch"; // Hook tipado
 import { GithubAuth } from "../../firebase/firebase"; // Función github
+import { MicrosoftAuth } from "../../firebase/firebase"; // Función microsfot
 import { loginUser } from "../../models/usuarioLogin";
 import securityService from "../../services/securityService";
-
+import axios from "axios";
 
 const SignIn: React.FC = () => {
   const navigate = useNavigate();
@@ -95,6 +96,57 @@ const SignIn: React.FC = () => {
       console.error("Error al iniciar sesión con GitHub: ", error.message);
     }
   }; 
+  
+  const handleMicrosoftLoginClick = async () => {
+    try {
+      const result = await MicrosoftAuth();
+      console.log("Resultado llamada Microsoft:", result);
+
+      if (result?.user && result?.accessToken) {
+        const { displayName, uid } = result.user;
+        const email = (result?.user as any).reloadUserInfo?.providerUserInfo?.[0]?.email 
+        const token = result?.accessToken;
+        let photoURL = "";
+
+        console.log("Email de Microsfot: ", email);        
+        console.log("Token de acceso de Microsfot:", token);
+
+        // Obtener foto de perfil
+        try {
+          const photoResponse = await axios.get('https://graph.microsoft.com/v1.0/me/photo/$value', {
+            headers: {
+              Authorization: `Bearer ${token}`
+            },
+            responseType: 'blob' // Importante para manejar la respuesta como un blob
+          });
+
+          if (photoResponse.data) {
+            photoURL = URL.createObjectURL(photoResponse.data);
+            console.log("Photo URL de Microsoft (desde Graph API):", photoURL);
+          }
+        } catch (photoError) {
+            console.error("Error al obtener la foto de Microsoft Graph:", photoError);
+            photoURL = ""; // En caso de error, dejamos la URL de la foto vacía
+        }
+
+        const microsoftUser = {
+          name: displayName || 'Usuario de Microsoft',
+          email: email || "",
+          picture: photoURL,
+          uid: uid,
+          provider: 'microsoft',
+          token: token, 
+        };
+
+        localStorage.setItem('loginUser', JSON.stringify(microsoftUser));
+        console.log("Usuario de Microsfot autenticado: ", microsoftUser);
+        dispatch(setUserInfo(microsoftUser));
+        navigate("/");
+      }
+    } catch (error: any) {
+      console.error("Error al iniciar sesión con Microsoft: ", error.message);
+    }
+  };
   
   return (
     <>
@@ -201,6 +253,7 @@ const SignIn: React.FC = () => {
                     </button> */}
                     {/* Microsoft Sign-In */}
                     <button
+                      onClick={handleMicrosoftLoginClick}
                       type="button"
                       className="w-full rounded-lg border border-blue-700 bg-blue-600 text-black py-2 hover:bg-blue-700"
                     >

@@ -78,6 +78,7 @@ const ListShift=lazy(()=>import('../pages/Shift/list'))
 const CreateShift=lazy(()=>import('../pages/Shift/create'))
 const UpdateShift=lazy(()=>import('../pages/Shift/update'))
 const ViewShift=lazy(()=>import('../pages/Shift/view'))
+const mapaTrackeoMoto = lazy(() => import('../pages/orderTrackingPage'))
 
 const coreRoutes = [
   {
@@ -104,6 +105,11 @@ const coreRoutes = [
     path: '/shift/view/:id',
     title: 'View of shift',
     component: ViewShift,
+  },
+  {
+    path: '/order/track/:plate',
+    title: 'Motorcycle Map',
+    component: mapaTrackeoMoto,
   },
   {
     path: '/order/list',
