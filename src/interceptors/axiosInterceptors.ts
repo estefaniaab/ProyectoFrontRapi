@@ -1,7 +1,7 @@
 import axios from "axios";
 
 // Lista de rutas que no deben ser interceptadas
-const EXCLUDED_ROUTES = ["/login", "/register"];
+const EXCLUDED_ROUTES = ["/auth/signin", "/register"];
 
 const api = axios.create({
     baseURL: import.meta.env.VITE_API_URL, // Cambia la URL base según tu API
