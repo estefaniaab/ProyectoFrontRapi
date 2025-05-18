@@ -1,12 +1,13 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { Order } from "../../models/Order";
-import { Formik, Form, Field, ErrorMessage, FieldProps } from "formik";
+import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { Motorcycle } from "../../models/Motorcycle";
 import { Menu } from "../../models/Menu";
 import { Customer } from "../../models/Customer";
 import { Restaurant } from "../../models/Restaurant";
+import Swal from "sweetalert2";
 
 interface MyFormProps {
     mode: number; // 1 (crear), 2 (actualizar), 3 (visualizar)
@@ -37,19 +38,41 @@ const OrderFormValidator: React.FC<MyFormProps> = ({
 }) => {
     const navigate = useNavigate();
 
-    const initialValues: Partial<Order> = order || {
-        quantity: 1,
-        status: "Pendiente",
-        customer_id: undefined,
-        restaurant_id: undefined,
-        menu_id: undefined,
-        motorcycle_id: undefined,
-        total_price: 0,
-    };
+    const initialValues: Partial<Order> = order
+        ? {
+            quantity: order.quantity,
+            status: order.status,
+            customer_id: order.customer_id,
+            restaurant_id: order.menu?.restaurant_id,
+            menu_id: order.menu_id,
+            motorcycle_id: order.motorcycle_id,
+            total_price: order.total_price,
+        }
+        : {
+            quantity: 1,
+            status: "Pendiente",
+            customer_id: undefined,
+            restaurant_id: undefined,
+            menu_id: undefined,
+            motorcycle_id: undefined,
+            total_price: 0,
+        };
 
     const handleSubmit = (values: Partial<Order>) => {
+        const selectedMenu = menus?.find(menu => menu.id === Number(values.menu_id));
+
+        // Verificación de availability del producto del menu
+        if (selectedMenu && !selectedMenu.availability) {
+            Swal.fire({
+                title: "No Disponible",
+                text: `El menu "${selectedMenu.product?.name}" no esta disponible actualmente`,
+                icon: "warning",
+                timer: 3000,
+            });
+            return // Detener envio del formulario
+        }
+
         // Aquí calculamos el precio total antes de enviar
-        const selectedMenu = menus?.find(menu => menu.id === values.menu_id);
         const totalPrice = selectedMenu?.price && values.quantity ? selectedMenu.price * values.quantity : 0;
 
         const orderToCreate: Omit<Order, "id"> = {
@@ -92,6 +115,7 @@ const OrderFormValidator: React.FC<MyFormProps> = ({
                     .required("La cantidad es obligatoria"),
                 motorcycle_id: Yup.number()
                     .integer("Debe ser un número entero")
+                    .required("La moto es obligatoria")
                     .positive("Debe seleccionar una motocicleta"),
                 status: Yup.string().notRequired(), // El estado podría tener un valor por defecto
                 total_price: Yup.number().notRequired(), // El precio total se calculará

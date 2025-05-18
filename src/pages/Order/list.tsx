@@ -1,14 +1,17 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { Eye, Edit, Trash2 } from "lucide-react";
 import Swal from "sweetalert2";
 import { Order } from "../../models/Order";
 import { orderService } from "../../services/orderService";
+import { Motorcycle } from "../../models/Motorcycle";
+import { motorcycleService } from "../../services/motorcycleServices";
 
 const ListOrder: React.FC = () => {
   const navigate = useNavigate();
 
   const [orders, setOrders] = useState<Order[]>([]);
+  const [motorcycleDetails, setMotorcycleDetails] = useState<{ [id: number]: Motorcycle }>({})
 
   useEffect(() => {
     fetchData();
@@ -30,6 +33,23 @@ const ListOrder: React.FC = () => {
     }
   };
 
+  useEffect(() => {
+    const fetchMotorcycleDetails = async () => {
+      const motorcyclesToFetch = [... new Set(orders.map(order => order.motorcycle_id).filter(id => id !== null && !motorcycleDetails[id!]))] as number[]
+      for (const id of motorcyclesToFetch) {
+        try {
+          const motorcycle = await motorcycleService.getMotorcycleById(id);
+          if (motorcycle) {
+            setMotorcycleDetails(prev => ({... prev, [id]: motorcycle }));
+          }
+        } catch (error) {
+          console.error(`Error fetching motorcycle ${id}: `, error);
+          
+        }
+      }
+    }
+    fetchMotorcycleDetails();
+  }, [orders, motorcycleDetails])
 
   const handleCreate = () => {
     navigate(`/order/create`);
@@ -96,7 +116,8 @@ const ListOrder: React.FC = () => {
                     <th scope="col" className="px-6 py-3">Precio Total</th>
                     <th scope="col" className="px-6 py-3">Estado</th>
                     <th scope="col" className="px-6 py-3">Cliente</th>
-                    <th scope="col" className="px-6 py-3">Menú</th>
+                    <th scope="col" className="px-6 py-3">Producto</th>
+                    <th scope="col" className="px-6 py-3">Restaurante</th> 
                     <th scope="col" className="px-6 py-3">Moto</th>
                     <th scope="col" className="px-6 py-3">Acciones</th>
                   </tr>
@@ -110,9 +131,10 @@ const ListOrder: React.FC = () => {
                       <td className="px-6 py-4 font-medium text-gray-900 dark:text-white">{order.quantity}</td>
                       <td className="px-6 py-4">{order.total_price}</td>
                       <td className="px-6 py-4">{order.status}</td>
-                      <td className="px-6 py-4">{order.customer_id}</td>
-                      <td className="px-6 py-4">{order.menu_id}</td>
-                      <td className="px-6 py-4">{order.motorcycle_id}</td>
+                      <td className="px-6 py-4">{order.customer?.name}</td>
+                      <td className="px-6 py-4">{order.menu?.product?.name}</td>
+                      <td className="px-6 py-4">{order.menu?.restaurant?.name}</td> 
+                      <td className="px-6 py-4">{motorcycleDetails[order.motorcycle_id!]?.license_plate}</td>
                       <td className="px-6 py-4 space-x-2">
                         <button
                           onClick={() => order.id !== undefined && handleView(order.id)}

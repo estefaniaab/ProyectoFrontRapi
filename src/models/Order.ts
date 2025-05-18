@@ -1,3 +1,7 @@
+import { Customer } from "./Customer";
+import { Menu } from "./Menu";
+import { Motorcycle } from "./Motorcycle";
+
 export interface Order {
     id?: number;
     quantity?: number;
@@ -7,6 +11,8 @@ export interface Order {
     restaurant_id?: number; // Nuevo campo
     menu_id?: number;
     motorcycle_id?: number;
-    // customer?: Customer;
-    // motorcycle?: Motorcycle;
+    created_at?: string;
+    address?: string; // Por el momento, despues cambiar
+    customer?: Customer;
+    menu?: Menu
 }
