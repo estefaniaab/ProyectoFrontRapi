@@ -33,7 +33,7 @@ const IssueFormValidator: React.FC<IssueFormValidatorProps> = ({
       console.error("No function provided for the current mode");
     }
   };
-
+  const effectiveMotorcycleId = motorcycleId || initialData?.motorcycle_id;
   return (
     <Formik
       initialValues={{
@@ -180,7 +180,7 @@ const IssueFormValidator: React.FC<IssueFormValidatorProps> = ({
             type="button"
             className="py-2 px-6 text-black rounded-md bg-gray-500 hover:bg-gray-600"
             onClick={() => {
-              navigate(motorcycleId ? `/issues/list/${motorcycleId}` : "/issues/list");
+              navigate(effectiveMotorcycleId? `/issues/list/${effectiveMotorcycleId}` : "/issues/list");
             }}
           >
             Volver
