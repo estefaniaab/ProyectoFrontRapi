@@ -70,11 +70,18 @@ const updateOrder = lazy(() => import('../pages/Order/update'))
 const UpdateMenu=lazy(()=>import('../pages/Menu/update'))
 const ViewMenu=lazy(()=>import('../pages/Menu/view'))
 
+const mapaTrackeoMoto = lazy(() => import('../pages/orderTrackingPage'))
+
 const coreRoutes = [
   {
     path: '/demo',
     title: 'Demo',
     component: Demo,
+  },
+  {
+    path: '/order/track/:plate',
+    title: 'Motorcycle Map',
+    component: mapaTrackeoMoto,
   },
   {
     path: '/order/list',

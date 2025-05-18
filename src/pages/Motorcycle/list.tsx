@@ -24,7 +24,7 @@
         //funciones para manajar acciones
         const handleCreate = () => {
             console.log("Vamos a crear una motocicleta");
-            navigate("/motorcycle/crear"); // Redireccionamos a la parte de create customers
+            navigate("/motorcycle/create"); // Redireccionamos a la parte de create customers
         }
         const handleView = (id: number) => {
             console.log(`Registro con ID: ${id}`);

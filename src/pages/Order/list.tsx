@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { Eye, Edit, Trash2 } from "lucide-react";
+import { Eye, Edit, Trash2, MapPin } from "lucide-react";
 import Swal from "sweetalert2";
 import { Order } from "../../models/Order";
 import { orderService } from "../../services/orderService";
 import { Motorcycle } from "../../models/Motorcycle";
 import { motorcycleService } from "../../services/motorcycleServices";
+import api from "../../interceptors/axiosInterceptors";
+
 
 const ListOrder: React.FC = () => {
   const navigate = useNavigate();
@@ -154,6 +156,14 @@ const ListOrder: React.FC = () => {
                         >
                           <Trash2 size={20} />
                         </button>
+                        {order.motorcycle_id && (
+                          <button
+                            onClick={() => navigate(`/order/track/${motorcycleDetails[order.motorcycle_id!]?.license_plate}`)}
+                            className="text-gray-600 dark:text-gray-500"
+                          >
+                            <MapPin size={20} />
+                          </button>
+                        )}
                       </td>
                     </tr>
                   ))}
