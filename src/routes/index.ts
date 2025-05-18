@@ -44,7 +44,9 @@ const UpdateProduct = lazy(() => import('../pages/Product/update'))
 const ViewProduct = lazy(() => import('../pages/Product/view'))
 
 const ListPhoto = lazy(() => import('../pages/Photo/list'));
-const CreatePhoto = lazy(()=>import('../pages/Photo/create'))
+const CreatePhoto = lazy(() => import('../pages/Photo/create'));
+const UpdatePhoto = lazy(() => import('../pages/Photo/update'));
+const ViewPhoto = lazy(() => import('../pages/Photo/view'));
 
 const CreateDriver= lazy(()=> import('../pages/Driver/cretae'))
 const ListDriver= lazy(()=> import('../pages/Driver/list'))
@@ -56,8 +58,10 @@ const ListRestaurant= lazy(()=> import('../pages/Restaurant/list'))
 const UpdateRestaurant= lazy(()=> import('../pages/Restaurant/update'))
 const ViewRestaurant= lazy(()=> import('../pages/Restaurant/view'))
 
-const ListIssues = lazy(()=> import('../pages/Issues/list'))
-const CrearIssues =lazy(()=>import('../pages/Issues/create'))
+const ListIssue = lazy(()=> import('../pages/Issues/list'))
+const CreateIssue =lazy(()=>import('../pages/Issues/create'))
+const UpdateIssue = lazy(() => import('../pages/Issues/update'));
+const ViewIssue = lazy(() => import('../pages/Issues/view'));
 
 const ListMenu= lazy(()=>import ('../pages/Menu/list'))
 const CreateMenu= lazy(()=>import('../pages/Menu/create'))
@@ -97,26 +101,44 @@ const coreRoutes = [
   },
 
   {
-    path: '/photo/list',
-    title: 'List of Photo', 
+    path: '/photo/list/:issue_id',
+    title: 'List of Photos',
     component: ListPhoto,
-
   },
   {
-    path: '/issues/list/:id_moto',
-    title: 'List of issues',
-    component: ListIssues,
-  },
-  {
-    path: '/issues/create/:id_moto',
-    title: 'List of issues',
-    component: CrearIssues,
-  },
-  {
-    path: '/photo/create',
-    title: 'Create of Photo', 
+    path: '/photo/create/:issue_id',
+    title: 'Create Photo',
     component: CreatePhoto,
-
+  },
+  {
+    path: '/photo/update/:id',
+    title: 'Update Photo',
+    component: UpdatePhoto,
+  },
+  {
+    path: '/photo/view/:id',
+    title: 'View Photo',
+    component: ViewPhoto,
+  },
+  {
+    path: '/issues/list/:motorcycle_id',
+    title: 'List of Issues',
+    component: ListIssue,
+  },
+  {
+    path: '/issues/create/:motorcycle_id',
+    title: 'Create Issue',
+    component: CreateIssue,
+  },
+  {
+    path: '/issues/update/:id',
+    title: 'Update Issue',
+    component: UpdateIssue,
+  },
+  {
+    path: '/issues/view/:id',
+    title: 'View Issue',
+    component: ViewIssue,
   },
   {
     path: '/restaurant/create',
