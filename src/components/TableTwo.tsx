@@ -1,125 +1,90 @@
-import ProductOne from '../images/product/product-01.png';
-import ProductTwo from '../images/product/product-02.png';
-import ProductThree from '../images/product/product-03.png';
-import ProductFour from '../images/product/product-04.png';
+import React from "react";
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Tooltip,
+  Legend,
+} from "chart.js";
+import { Bar } from "react-chartjs-2";
+import useFetch from "../hooks/useFetch";
+
+ChartJS.register(CategoryScale, LinearScale, BarElement, Tooltip, Legend);
+
+interface ChartData {
+  name: string;
+  value: number;
+}
 
 const TableTwo = () => {
+  const { data: pedidos, loading: loading1 } = useFetch<ChartData[]>(
+    "https://b13f0cb6-ff95-4bb2-870a-d3c844428190.mock.pstmn.io/PedidosPorRestaurante"
+  );
+  const { data: comidas, loading: loading2 } = useFetch<ChartData[]>(
+    "https://b13f0cb6-ff95-4bb2-870a-d3c844428190.mock.pstmn.io/ComidaMasSolicitada"
+  );
+  const { data: accidentes, loading: loading3 } = useFetch<ChartData[]>(
+    "https://b13f0cb6-ff95-4bb2-870a-d3c844428190.mock.pstmn.io/AccidentesPorMes"
+  );
+
+  const generateChartData = (data: ChartData[]) => ({
+    labels: data.map((item) => item.name),
+    datasets: [
+      {
+        label: "Cantidad",
+        data: data.map((item) => item.value),
+        backgroundColor: [
+          "rgba(230, 9, 9, 0.6)",
+          "rgba(9, 80, 128, 0.6)",
+          "rgba(243, 184, 34, 0.6)",
+          "rgba(23, 85, 85, 0.6)",
+          "rgba(61, 13, 156, 0.6)",
+          "rgba(129, 69, 9, 0.6)",
+        ],
+        borderColor: [
+          "rgba(255, 99, 132, 1)",
+          "rgba(54, 162, 235, 1)",
+          "rgba(255, 206, 86, 1)",
+          "rgba(75, 192, 192, 1)",
+          "rgba(153, 102, 255, 1)",
+          "rgba(255, 159, 64, 1)",
+        ],
+        borderWidth: 1,
+      },
+    ],
+  });
+
+  if (loading1 || loading2 || loading3) return <p>Cargando datos...</p>;
+
   return (
-    <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
-      <div className="py-6 px-4 md:px-6 xl:px-7.5">
-        <h4 className="text-xl font-semibold text-black dark:text-white">
-          Top Products
-        </h4>
-      </div>
+    <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark p-6">
+      <h4 className="text-xl font-semibold text-black dark:text-white mb-6">
+        Barras
+      </h4>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        {/* Primer gráfico */}
+        <div className="flex flex-col items-center">
+          <h5 className="mb-4 text-base font-medium text-black dark:text-white">
+            Pedidos por Restaurante
+          </h5>
+          <div className="w-200 h-300">{pedidos && <Bar data={generateChartData(pedidos)} />}</div>
+        </div>
 
-      <div className="grid grid-cols-6 border-t border-stroke py-4.5 px-4 dark:border-strokedark sm:grid-cols-8 md:px-6 2xl:px-7.5">
-        <div className="col-span-3 flex items-center">
-          <p className="font-medium">Product Name</p>
+        {/* Segundo gráfico */}
+        <div className="flex flex-col items-center">
+          <h5 className="mb-4 text-base font-medium text-black dark:text-white">
+            Comida Más Solicitada
+          </h5>
+          <div className="w-200 h-300">{comidas && <Bar data={generateChartData(comidas)} />}</div>
         </div>
-        <div className="col-span-2 hidden items-center sm:flex">
-          <p className="font-medium">Category</p>
-        </div>
-        <div className="col-span-1 flex items-center">
-          <p className="font-medium">Price</p>
-        </div>
-        <div className="col-span-1 flex items-center">
-          <p className="font-medium">Sold</p>
-        </div>
-        <div className="col-span-1 flex items-center">
-          <p className="font-medium">Profit</p>
-        </div>
-      </div>
 
-      <div className="grid grid-cols-6 border-t border-stroke py-4.5 px-4 dark:border-strokedark sm:grid-cols-8 md:px-6 2xl:px-7.5">
-        <div className="col-span-3 flex items-center">
-          <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
-            <div className="h-12.5 w-15 rounded-md">
-              <img src={ProductOne} alt="Product" />
-            </div>
-            <p className="text-sm text-black dark:text-white">
-              Apple Watch Series 7
-            </p>
-          </div>
-        </div>
-        <div className="col-span-2 hidden items-center sm:flex">
-          <p className="text-sm text-black dark:text-white">Electronics</p>
-        </div>
-        <div className="col-span-1 flex items-center">
-          <p className="text-sm text-black dark:text-white">$269</p>
-        </div>
-        <div className="col-span-1 flex items-center">
-          <p className="text-sm text-black dark:text-white">22</p>
-        </div>
-        <div className="col-span-1 flex items-center">
-          <p className="text-sm text-meta-3">$45</p>
-        </div>
-      </div>
-      <div className="grid grid-cols-6 border-t border-stroke py-4.5 px-4 dark:border-strokedark sm:grid-cols-8 md:px-6 2xl:px-7.5">
-        <div className="col-span-3 flex items-center">
-          <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
-            <div className="h-12.5 w-15 rounded-md">
-              <img src={ProductTwo} alt="Product" />
-            </div>
-            <p className="text-sm text-black dark:text-white">Macbook Pro M1</p>
-          </div>
-        </div>
-        <div className="col-span-2 hidden items-center sm:flex">
-          <p className="text-sm text-black dark:text-white">Electronics</p>
-        </div>
-        <div className="col-span-1 flex items-center">
-          <p className="text-sm text-black dark:text-white">$546</p>
-        </div>
-        <div className="col-span-1 flex items-center">
-          <p className="text-sm text-black dark:text-white">34</p>
-        </div>
-        <div className="col-span-1 flex items-center">
-          <p className="text-sm text-meta-3">$125</p>
-        </div>
-      </div>
-      <div className="grid grid-cols-6 border-t border-stroke py-4.5 px-4 dark:border-strokedark sm:grid-cols-8 md:px-6 2xl:px-7.5">
-        <div className="col-span-3 flex items-center">
-          <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
-            <div className="h-12.5 w-15 rounded-md">
-              <img src={ProductThree} alt="Product" />
-            </div>
-            <p className="text-sm text-black dark:text-white">
-              Dell Inspiron 15
-            </p>
-          </div>
-        </div>
-        <div className="col-span-2 hidden items-center sm:flex">
-          <p className="text-sm text-black dark:text-white">Electronics</p>
-        </div>
-        <div className="col-span-1 flex items-center">
-          <p className="text-sm text-black dark:text-white">$443</p>
-        </div>
-        <div className="col-span-1 flex items-center">
-          <p className="text-sm text-black dark:text-white">64</p>
-        </div>
-        <div className="col-span-1 flex items-center">
-          <p className="text-sm text-meta-3">$247</p>
-        </div>
-      </div>
-      <div className="grid grid-cols-6 border-t border-stroke py-4.5 px-4 dark:border-strokedark sm:grid-cols-8 md:px-6 2xl:px-7.5">
-        <div className="col-span-3 flex items-center">
-          <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
-            <div className="h-12.5 w-15 rounded-md">
-              <img src={ProductFour} alt="Product" />
-            </div>
-            <p className="text-sm text-black dark:text-white">HP Probook 450</p>
-          </div>
-        </div>
-        <div className="col-span-2 hidden items-center sm:flex">
-          <p className="text-sm text-black dark:text-white">Electronics</p>
-        </div>
-        <div className="col-span-1 flex items-center">
-          <p className="text-sm text-black dark:text-white">$499</p>
-        </div>
-        <div className="col-span-1 flex items-center">
-          <p className="text-sm text-black dark:text-white">72</p>
-        </div>
-        <div className="col-span-1 flex items-center">
-          <p className="text-sm text-meta-3">$103</p>
+        {/* Tercer gráfico ocupa toda la fila */}
+        <div className="flex flex-col items-center md:col-span-2">
+          <h5 className="mb-4 text-base font-medium text-black dark:text-white">
+            Accidentes por Mes
+          </h5>
+          <div className="w-200 h-300">{accidentes && <Bar data={generateChartData(accidentes)} />}</div>
         </div>
       </div>
     </div>
