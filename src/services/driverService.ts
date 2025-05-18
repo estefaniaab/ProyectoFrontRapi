@@ -27,7 +27,7 @@ class DriverService {
 
     async createDriver(driver: Omit<Driver, "id">): Promise<Driver | null> {
         try {
-            const response = await axios.post<Driver>(API_URL, driver);
+            const response = await api.post<Driver>(API_URL, driver);
             return response.data;
         } catch (error) {
             console.error('Error al crear el driver:', error);
@@ -37,7 +37,7 @@ class DriverService {
 
     async updateDriver(id: number, driver: Partial<Driver>): Promise<Driver | null> {
         try {
-            const response = await axios.put<Driver>(`${API_URL}/${id}`, driver);
+            const response = await api.put<Driver>(`${API_URL}/${id}`, driver);
             return response.data;
         } catch (error) {
             console.error(`Error al actualizar el driver con id: ${id}`, error);

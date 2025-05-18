@@ -1,4 +1,3 @@
-import axios from "axios";
 import { Customer } from "../models/Customer";
 import api from "../interceptors/axiosInterceptors";
 
@@ -27,7 +26,7 @@ class CustomerService {
 
     async createCustomer(customer: Omit<Customer, "id">): Promise<Customer | null> {
         try {
-            const response = await axios.post<Customer>(API_URL, customer);
+            const response = await api.post<Customer>(API_URL, customer);
             return response.data;
         } catch (error) {
             console.error('Error al crear el customer:', error);
@@ -37,7 +36,7 @@ class CustomerService {
 
     async updateCustomer(id:number, user: Partial<Customer>): Promise<Customer | null> {
         try {
-            const response = await axios.put<Customer>(`${API_URL}/${id}`, user);
+            const response = await api.put<Customer>(`${API_URL}/${id}`, user);
             return response.data;
         } catch (error) {
             console.error(`Error al actualizar el usuario con id: ${id}`, error);
@@ -47,7 +46,7 @@ class CustomerService {
 
     async deleteCustomer(id:number): Promise<boolean> {
         try {
-            await axios.delete(`${API_URL}/${id}`);
+            await api.delete(`${API_URL}/${id}`);
             return true;
         } catch (error) {
             console.error(`Error al elimar el usuario con id ${id}, `, error);

@@ -65,6 +65,12 @@ const ViewIssue = lazy(() => import('../pages/Issues/view'));
 
 const ListMenu= lazy(()=>import ('../pages/Menu/list'))
 const CreateMenu= lazy(()=>import('../pages/Menu/create'))
+
+const listOrder = lazy(() => import('../pages/Order/list'))
+const createOrder = lazy(() => import('../pages/Order/create'))
+const viewOrder = lazy(() => import('../pages/Order/view'))
+const updateOrder = lazy(() => import('../pages/Order/update'))
+
 const UpdateMenu=lazy(()=>import('../pages/Menu/update'))
 const ViewMenu=lazy(()=>import('../pages/Menu/view'))
 
@@ -73,6 +79,26 @@ const coreRoutes = [
     path: '/demo',
     title: 'Demo',
     component: Demo,
+  },
+  {
+    path: '/order/list',
+    title: 'List of orders',
+    component: listOrder,
+  },
+  {
+    path: '/order/create',
+    title: 'Create Order',
+    component: createOrder,
+  },
+  {
+    path: '/order/view/:id',
+    title: 'View Order',
+    component: viewOrder,
+  },
+  {
+    path: '/order/update/:id',
+    title: 'Update Order',
+    component: updateOrder,
   },
   {
     path: '/menu/list/:id_restaurant',
