@@ -13,6 +13,19 @@ class IssueService {
             return [];
         }
     }
+    async getIssuesByMotorcycleId(motorcycleId: number): Promise<Issue[]> {
+        if (!motorcycleId || motorcycleId <= 0 || isNaN(motorcycleId)) {
+        console.error(`ID de motocicleta inválido: ${motorcycleId}`);
+        return [];
+        }
+        try {
+        const response = await api.get(`${API_URL}/motorcycles/${motorcycleId}/issues`);
+        return response.data;
+        } catch (error) {
+        console.error(`Error al obtener las averías para la motocicleta ${motorcycleId}:`, error);
+        return [];
+        }
+    }
 
     async getIssueById(id: number): Promise<Issue | null> {
         try {

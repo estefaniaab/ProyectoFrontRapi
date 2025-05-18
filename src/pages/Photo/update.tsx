@@ -27,7 +27,7 @@ const UpdatePhoto: React.FC = () => {
                     icon: "error",
                     timer: 3000,
                 });
-                navigate("/photo/list");
+                navigate(`/photo/list/`);
             }
         };
         fetchPhoto();
