@@ -78,6 +78,10 @@ const ListShift=lazy(()=>import('../pages/Shift/list'))
 const CreateShift=lazy(()=>import('../pages/Shift/create'))
 const UpdateShift=lazy(()=>import('../pages/Shift/update'))
 const ViewShift=lazy(()=>import('../pages/Shift/view'))
+
+const listAddress = lazy(() => import('../pages/Address/manageOrderAddress'))
+
+
 const mapaTrackeoMoto = lazy(() => import('../pages/orderTrackingPage'))
 
 const coreRoutes = [
@@ -85,6 +89,11 @@ const coreRoutes = [
     path: '/demo',
     title: 'Demo',
     component: Demo,
+  },
+  {
+    path: '/orders/:orderId/address',
+    title: 'List of Adresses',
+    component: listAddress,
   },
   {
     path: '/shift/list',

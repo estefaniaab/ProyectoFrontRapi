@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { Eye, Edit, Trash2, MapPin } from "lucide-react";
+import { Eye, Edit, Trash2, MapPin, Home } from "lucide-react";
 import Swal from "sweetalert2";
 import { Order } from "../../models/Order";
 import { orderService } from "../../services/orderService";
@@ -51,6 +51,10 @@ const ListOrder: React.FC = () => {
     }
     fetchMotorcycleDetails();
   }, [orders, motorcycleDetails])
+
+  const handleManageAddress = (orderId: number) => {
+    navigate(`/order/${orderId}/address`);
+  }
 
   const handleCreate = () => {
     navigate(`/order/create`);
@@ -155,6 +159,12 @@ const ListOrder: React.FC = () => {
                           className="text-red-600 dark:text-red-500"
                         >
                           <Trash2 size={20} />
+                        </button>
+                        <button
+                          onClick={() => order.id !== undefined && handleManageAddress(order.id)}
+                          className="text-gray-600 dark:text-gray-500"
+                        >
+                          <Home size={20} />  
                         </button>
                         {order.motorcycle_id && (
                           <button
