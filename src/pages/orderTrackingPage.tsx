@@ -82,10 +82,13 @@ const OrderTrackingPage: React.FC = () => {
                     </Marker>
                 )}
             </MapContainer>
+            <br />
             <button 
                 type="button"
                 onClick={() => navigate('/order/list')}
-                className="py-2 px-6 text-gray rounded-md bg-gray-500 hover:bg-gray-600"
+                className="py-2 px-6 rounded-md bg-gray text-black hover:bg-gray-800
+                    dark:bg-white dark:text-black dark:hover:bg-gray-100
+                    transition-colors duration-200"
             >
                 Volver
             </button>

@@ -13,7 +13,7 @@ class SecurityService extends EventTarget {
         super();
 
         this.keySession = 'session';
-        this.API_URL = import.meta.env.VITE_POSTMAN_USER || ""; // Reemplaza con la URL real
+        this.API_URL = import.meta.env.VITE_POSTMAN_LOGIN_USER || ""; // Reemplaza con la URL real
         const storedUser = localStorage.getItem("loginUser");
         if (storedUser) {
             this.user = JSON.parse(storedUser);
