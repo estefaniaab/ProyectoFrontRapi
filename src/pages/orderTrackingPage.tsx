@@ -6,6 +6,7 @@ import { divIcon } from 'leaflet';
 import { useNavigate } from 'react-router-dom';
 import { io, Socket } from 'socket.io-client';
 import api from '../interceptors/axiosInterceptors';
+import moto from '../images/logo/moto.svg';
 
 
 
@@ -62,9 +63,9 @@ const OrderTrackingPage: React.FC = () => {
 
     const customIcon = location ? divIcon({
         className: 'custom-marker',
-        html: `<svg stroke="currentColor" fill="blue" stroke-width="0" viewBox="0 0 24 24" height="30" width="30" xmlns="http://www.w3.org/2000/svg"><path d="M20.91 11.06a1 1 0 0 0-.7-.29l-3.54-.52a1 1 0 0 0-.69.3l-1.17 2.48a1 1 0 0 1-.88.68h-3.8a1 1 0 0 1-.88-.68l-1.17-2.48a1 1 0 0 0-.69-.3l-3.54.52a1 1 0 0 0-.7.29 1 1 0 0 0 .29 1.71l1.44.21a1 1 0 0 1 .7.59l.9 1.9a1 1 0 0 1 .38.73l.2.42a1 1 0 0 0 .9.81h3.8a1 1 0 0 0 .9-.81l.2-.42a1 1 0 0 1 .38-.73l.9-1.9a1 1 0 0 1 .7-.59l1.44-.21a1 1 0 0 0 1-1.42z"></path><circle cx="16" cy="17" r="3"></circle><circle cx="8" cy="17" r="3"></circle></svg>`,
-        iconSize: [30, 30],
-        iconAnchor: [15, 15],
+        html: `<img src=${moto} style="width: 20px; height: 20px;" />`,
+        iconSize: [20, 20],
+        iconAnchor: [10, 10],
     }) : undefined
     return (
         <div style={{ height: '100vh', width: '100%' }}>
