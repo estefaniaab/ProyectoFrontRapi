@@ -107,6 +107,10 @@ const ListIssue: React.FC = () => {
     });
   };
 
+  const handleGoBackToMotorcycle = () => {
+    navigate(`/motorcycle/view/${motorcycleId}`)
+  }
+
   return (
     <IssueContainerWithHeader motorcycleId={motorcycleId}>
       <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
@@ -192,6 +196,18 @@ const ListIssue: React.FC = () => {
                 ))}
               </tbody>
             </table>
+            <button
+              onClick={handleGoBackToMotorcycle}
+              className="mt-4 py-2 px-4 text-black rounded-md bg-gray-500 hover:bg-gray-600"
+            >
+              Volver a la motocicleta
+            </button>
+            <button
+              onClick={() => navigate('/motorcycle/list')}
+              className="mt-4 py2 px-4 text-black rounded-md bg-gray-500 hover:bg-gray-600"
+            >
+              Volver a la lista de motocicletas
+            </button>
           </div>
         </div>
       </div>

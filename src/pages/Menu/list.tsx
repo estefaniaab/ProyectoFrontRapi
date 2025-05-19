@@ -89,6 +89,10 @@ const ListMenu: React.FC = () => {
       }
     });
   };
+  
+  const handleGoBackToRestaurant = () => {
+    navigate(`/restaurant/view/${restaurantId}`)
+  }
 
   return (
     <MenuContainer restaurantId={restaurantId}>
@@ -155,6 +159,18 @@ const ListMenu: React.FC = () => {
                   ))}
                 </tbody>
               </table>
+              <button
+                onClick={handleGoBackToRestaurant}
+                className="mt-4 py-2 px-4 text-black rounded-md bg-gray-500 hover:bg-gray-600"
+              >
+                Volver al Restaurante
+              </button>
+              <button
+                onClick={() => navigate('/restaurant/list')}
+                className="mt-4 py2 px-4 text-black rounded-md bg-gray-500 hover:bg-gray-600"
+              >
+                Volver a la lista de restaurantes
+              </button>
             </div>
           </div>
         </div>
