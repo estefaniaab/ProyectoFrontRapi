@@ -76,9 +76,10 @@ class GoogleService {
         }
     }
 
-    public logout(): void {
+    public logout(navigate: (path: string) => void): void {
         localStorage.removeItem('loginUser');
         store.dispatch(clearUserInfo()); // Despacha la acción para limpiar el estado de Redux
+        navigate('/')
     }
 
 

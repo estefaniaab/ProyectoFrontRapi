@@ -49,7 +49,7 @@ class PhotoService {
     }
 
     // Actualizar una foto existente
-    async updatePhoto(id: number, photo: Partial<Photo>): Promise<Photo | null> {
+    async updatePhoto(id: number, photo: Partial<Photo | FormData>): Promise<Photo | null> {
         try {
             const response = await api.put<Photo>(`${API_URL}/photos/${id}`, photo);
             return response.data;

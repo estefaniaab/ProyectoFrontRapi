@@ -93,6 +93,10 @@ const ListPhoto: React.FC = () => {
         });
     };
 
+    const handleGoBackToIssue = () => {
+        navigate(`/issues/list/${issueId}`)
+    }
+
     /*const getPublicImageUrl = (imagePath: string | undefined) => {
         if (!imagePath) return `${import.meta.env.VITE_API_URL}/uploads/default.png`;
         const filename = imagePath.split("\\").pop() || "default.png";
@@ -166,6 +170,16 @@ const ListPhoto: React.FC = () => {
                                         ))}
                                     </tbody>
                                 </table>
+                                <div className="mt-6 flex flex-col sm:flex-row gap-4 w-full">
+                                    <button
+                                      onClick={handleGoBackToIssue}
+                                      className="py-2 px-6 rounded-md bg-gray text-black hover:bg-gray-800
+                                          dark:bg-white dark:text-black dark:hover:bg-gray-100
+                                          transition-colors duration-200"
+                                    >
+                                      Volver a la avería
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     </div>

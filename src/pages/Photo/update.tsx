@@ -81,10 +81,16 @@ const UpdatePhoto: React.FC = () => {
           formData.append("taken_at", updatedPhoto.taken_at.toISOString());
         }
         // Se asume que el servicio de actualización acepta FormData o un objeto similar
-        result = await photoService.updatePhoto(photoId!, updatedPhoto);
+        result = await photoService.updatePhoto(photoId!, formData);
       } else {
         // Si no se selecciona nueva imagen, actualizamos con la información existente
-        result = await photoService.updatePhoto(photoId!, updatedPhoto);
+        const dataToUpdate: Partial<Photo> =  {
+          caption: updatedPhoto.caption,
+          taken_at: updatedPhoto.taken_at ? updatedPhoto.taken_at : undefined,
+          issue_id: updatedPhoto.issue_id
+          // No incluimos image_url si no se modificó
+        };
+        result = await photoService.updatePhoto(photoId!, dataToUpdate);
       }
 
       if (result) {
