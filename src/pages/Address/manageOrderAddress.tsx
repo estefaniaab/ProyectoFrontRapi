@@ -12,6 +12,7 @@ const ManageOrderAddress: React.FC = () => {
     const numericOrderId = parseInt(orderId ?? "", 10);
     const [address, setAddress] = useState<Address | null>(null);
     const [loading, setLoading] = useState(true);
+    const [isEditing, setIsEditing] = useState(false);
 
     useEffect(() => {
         const fetchAddress = async () => {
@@ -33,10 +34,25 @@ const ManageOrderAddress: React.FC = () => {
         }
         try {
             const addressToCreate = { ...addressData, order_id: numericOrderId };
-            const createdAddress = await addressService.createAddress(addressToCreate);
+            console.log("Datos a crear:", addressToCreate); // <--- Agrega esto
+            const createdAddressResponse = await addressService.createAddress(addressToCreate);
+            const createdAddress = Array.isArray(createdAddressResponse) ? createdAddressResponse[0] : createdAddressResponse; // Extraer la dirección del array
+
+            console.log("Datos del backend:", createdAddress);
+            
             if (createdAddress) {
                 Swal.fire("Éxito", "Dirección creada.", "success").then(() => {
-                    setAddress(createdAddress); // Actualizar el estado para mostrar la dirección creada
+                    const newAddress = {
+                        id: createdAddress.id,
+                        street: createdAddress.street,
+                        city: createdAddress.city,
+                        state: createdAddress.state,
+                        postal_code: createdAddress.postal_code,
+                        additional_info: createdAddress.additional_info,
+                        order_id: createdAddress.order_id,
+                        order: {id: numericOrderId} as any,
+                    };
+                    setAddress(newAddress );
                 });
             } else {
                 Swal.fire("Error", "No se pudo crear la dirección.", "error");
@@ -47,16 +63,17 @@ const ManageOrderAddress: React.FC = () => {
         }
     };
 
-    const handleUpdateAddress = async (updatedAddressData: Address) => {
+    const handleUpdateAddress = async (updatedAddressData: Omit<Address, "id" | "order">) => {
         if (!address?.id) {
             Swal.fire("Error", "No hay dirección para actualizar.", "error");
             return;
         }
         try {
-            const updated = await addressService.updateAddress(address.id, updatedAddressData);
+            const updated = await addressService.updateAddress(address.id, { ...updatedAddressData, order_id: numericOrderId });
             if (updated) {
                 Swal.fire("Éxito", "Dirección actualizada.", "success").then(() => {
                     setAddress(updated);
+                    setIsEditing(false); // Salir del modo edición
                 });
             } else {
                 Swal.fire("Error", "No se pudo actualizar la dirección.", "error");
@@ -86,7 +103,8 @@ const ManageOrderAddress: React.FC = () => {
                 const success = await addressService.deleteAddress(address.id!);
                 if (success) {
                     Swal.fire("Éxito", "Dirección eliminada.", "success").then(() => {
-                        setAddress(null); // Actualizar el estado
+                        setAddress(null);
+                        setIsEditing(false); // Asegurarse de salir del modo edición
                     });
                 } else {
                     Swal.fire("Error", "No se pudo eliminar la dirección.", "error");
@@ -118,25 +136,43 @@ const ManageOrderAddress: React.FC = () => {
 
                 {address ? (
                     <div>
-                        <h3>Dirección Existente:</h3>
-                        <p>Calle: {address.street}</p>
-                        <p>Ciudad: {address.city}</p>
-                        <p>Estado: {address.state}</p>
-                        <p>Código Postal: {address.postal_code || 'N/A'}</p>
-                        <p>Información Adicional: {address.aditional_info || 'N/A'}</p>
+                        {isEditing ? (
+                            <div>
+                                <h3>Editar Dirección:</h3>
+                                <AddressFormValidator
+                                    mode={2}
+                                    handleUpdate={handleUpdateAddress}
+                                    readOnly={false}
+                                    address={address}
+                                    orderId={numericOrderId}
+                                />
+                                <button onClick={() => setIsEditing(false)} className="mt-2 py-2 px-4 text-gray-700 rounded-md hover:underline">
+                                    Cancelar Edición
+                                </button>
+                            </div>
+                        ) : (
+                            <div>
+                                <h3>Dirección Existente:</h3>
+                                <p>Calle: {address.street}</p>
+                                <p>Ciudad: {address.city}</p>
+                                <p>Estado: {address.state}</p>
+                                <p>Código Postal: {address.postal_code || 'N/A'}</p>
+                                <p>Información Adicional: {address.additional_info || 'N/A'}</p>
 
-                        <button
-                            onClick={() => navigate(`/address/update/${address.id}`)} // Podemos crear un nuevo componente UpdateAddress o usar el form en modo editar
-                            className="py-2 px-4 text-yellow-600 rounded-md hover:underline mr-2"
-                        >
-                            Editar
-                        </button>
-                        <button
-                            onClick={handleDeleteAddress}
-                            className="py-2 px-4 text-red-600 rounded-md hover:underline"
-                        >
-                            Eliminar
-                        </button>
+                                <button
+                                    onClick={() => setIsEditing(true)}
+                                    className="py-2 px-4 text-yellow-600 rounded-md hover:underline mr-2"
+                                >
+                                    Editar
+                                </button>
+                                <button
+                                    onClick={handleDeleteAddress}
+                                    className="py-2 px-4 text-red-600 rounded-md hover:underline"
+                                >
+                                    Eliminar
+                                </button>
+                            </div>
+                        )}
                     </div>
                 ) : (
                     <div>
@@ -155,6 +191,12 @@ const ManageOrderAddress: React.FC = () => {
                     className="mt-4 py-2 px-4 text-black rounded-md bg-gray-500 hover:bg-gray-600"
                 >
                     Volver a la Orden
+                </button>
+                <button
+                    onClick={() => navigate('/order/list')}
+                    className="mt-4 py2 px-4 text-black rounded-md bg-gray-500 hover:bg-gray-600"
+                >
+                    Volver a la lista de ordenes
                 </button>
             </div>
         </div>

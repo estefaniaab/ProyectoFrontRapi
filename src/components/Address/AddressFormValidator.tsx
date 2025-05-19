@@ -30,14 +30,14 @@ const AddressFormValidator: React.FC<AddressFormProps> = ({
             city: address.city,
             state: address.state,
             postal_code: address.postal_code,
-            aditional_info: address.aditional_info,
+            additional_info: address.additional_info,
         }
         : {
             street: "",
             city: "",
             state: "",
             postal_code: "",
-            aditional_info: "",
+            additional_info: "",
         };
 
     const handleSubmit = (values: Partial<Address>) => {
@@ -46,7 +46,7 @@ const AddressFormValidator: React.FC<AddressFormProps> = ({
             city: values.city!,
             state: values.state!,
             postal_code: values.postal_code!,
-            aditional_info: values.aditional_info,
+            additional_info: values.additional_info,
             order_id: orderId, // Aseguramos de adjuntar el orderId
         };
 
@@ -67,7 +67,7 @@ const AddressFormValidator: React.FC<AddressFormProps> = ({
                 city: Yup.string().required("La ciudad es obligatoria"),
                 state: Yup.string().required("El estado/provincia es obligatorio"),
                 postal_code: Yup.string().notRequired(),
-                aditional_info: Yup.string().notRequired(),
+                additional_info: Yup.string().notRequired(),
             })}
             onSubmit={handleSubmit}
             enableReinitialize
@@ -99,9 +99,9 @@ const AddressFormValidator: React.FC<AddressFormProps> = ({
                     </div>
 
                     <div>
-                        <label htmlFor="aditional_info" className="block text-lg font-medium text-gray-700">Información Adicional (Opcional)</label>
-                        <Field as="textarea" name="aditional_info" className="w-full border rounded-md p-2" rows={3} disabled={readOnly} />
-                        <ErrorMessage name="aditional_info" component="p" className="text-red-500 text-sm" />
+                        <label htmlFor="additional_info" className="block text-lg font-medium text-gray-700">Información Adicional (Opcional)</label>
+                        <Field as="textarea" name="additional_info" className="w-full border rounded-md p-2" rows={3} disabled={readOnly} />
+                        <ErrorMessage name="additional_info" component="p" className="text-red-500 text-sm" />
                     </div>
 
                     <div className="flex gap-2">
@@ -115,13 +115,6 @@ const AddressFormValidator: React.FC<AddressFormProps> = ({
                                 {mode === 1 ? "Crear Dirección" : mode === 2 ? "Actualizar Dirección" : ""}
                             </button>
                         )}
-                        <button
-                            type="button"
-                            className="py-2 px-6 text-black rounded-md bg-gray-500 hover:bg-gray-600"
-                            onClick={() => navigate("/order/list")} // Podemos ajustar la navegación si es necesario
-                        >
-                            Volver
-                        </button>
                     </div>
                 </Form>
             )}
