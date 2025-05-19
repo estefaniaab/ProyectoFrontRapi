@@ -98,7 +98,7 @@ const PhotoFormValidator: React.FC<MyFormProps> = ({ mode, handleCreate, handleU
             <label htmlFor="issue_id" className="block text-lg font-medium text-gray-700">
               ID de la Avería
             </label>
-            <Field type="number" name="issue_id" className="w-full border rounded-md p-2" disabled={readOnly} />
+            <Field type="number" name="issue_id" className="w-full border rounded-md p-2" disable readOnly />
             <ErrorMessage name="issue_id" component="p" className="text-red-500 text-sm" />
           </div>
 
@@ -126,7 +126,7 @@ const PhotoFormValidator: React.FC<MyFormProps> = ({ mode, handleCreate, handleU
                   />
                   <label
                     htmlFor="fileUpload"
-                    className="cursor-pointer py-2 px-4 bg-orange-500 text-white rounded-md hover:bg-orange-600 inline-block"
+                    className="cursor-pointer py-2 px-4 bg-orange-500 text-gray-600 rounded-md hover:bg-orange-600 inline-block"
                   >
                     Seleccionar Foto
                   </label>

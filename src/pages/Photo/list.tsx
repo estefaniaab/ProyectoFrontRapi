@@ -115,18 +115,18 @@ const ListPhoto: React.FC = () => {
                                 <table className="w-full text-sm text-left rtl:text-right text-gray-500">
                                     <thead className="text-xs text-gray-700 uppercase bg-gray-50">
                                         <tr>
-                                            <th className="border border-gray-300 p-2">ID</th>
-                                            <th className="border border-gray-300 p-2">Imagen</th>
-                                            <th className="border border-gray-300 p-2">Descripción</th>
-                                            <th className="border border-gray-300 p-2">Fecha</th>
-                                            <th className="border border-gray-300 p-2">Acciones</th>
+                                            <th scope="col" className="px-6 py-3">ID</th>
+                                            <th scope="col" className="px-6 py-3">Imagen</th>
+                                            <th scope="col" className="px-6 py-3">Descripción</th>
+                                            <th scope="col" className="px-6 py-3">Fecha</th>
+                                            <th scope="col" className="px-6 py-3">Acciones</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         {photos.map((photo) => (
                                             <tr
                                                 key={photo.id}
-                                                className="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700 border-gray-200"
+                                                className="odd:bg-whiteodd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700 border-gray-200"
                                             >
                                                 <td className="px-6 py-4 font-medium text-gray-900 dark:text-white">
                                                     {photo.id}
@@ -156,7 +156,7 @@ const ListPhoto: React.FC = () => {
                                                         <Edit size={20} />
                                                     </button>
                                                     <button
-                                                        onClick={() => photo.id !== undefined && handleDelete(item.id)}
+                                                        onClick={() => photo.id !== undefined && handleDelete(photo.id)}
                                                         className="text-red-600 dark:text-red-500"
                                                     >
                                                         <Trash2 size={20} />
