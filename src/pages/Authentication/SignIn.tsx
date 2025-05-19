@@ -199,64 +199,34 @@ const SignIn: React.FC = () => {
                     >
                       Login
                     </button>
+                    {/* Google Sign-in */}
                     <div id="google-signin"></div>
+                    {/*Github Sign-in */}
                     <button
-                      className="flex w-full items-center justify-center gap-3.5 rounded-lg border border-stroke bg-gray p-4 hover:bg-opacity-50 dark:border-strokedark dark:bg-meta-4 dark:hover:bg-opacity-50"
+                      className="flex w-full items-center justify-center gap-3 rounded-lg bg-[#24292F] px-4 py-4 text-white transition-all hover:bg-[#24292F]/90 focus:ring-4 focus:ring-[#24292F]/50"
                       onClick={handleGitHubLoginClick}
                     >
-                      <span>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-github">
-                          <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 6.77 5.1 5.1 0 0 0 14.57 2.74 5.44 5.44 0 0 0 9 2.77 5.1 5.1 0 0 0 3.46 6.72a3.37 3.37 0 0 0-.94 2.61V21m-7-6c2.76-.35 5.81-1.54 5.81-7 0-3.9-2.72-7-7.62-7a5.3 5.3 0 0 0-.06.22C9 3.7 7.28 7 7.28 11.97c0 5.43 3.17 7.07 5.81 7.07" />
-                        </svg>
-                      </span>
+                      <svg className="h-5 w-5" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20">
+                        <path 
+                          fillRule="evenodd"
+                          d= "M10 0C4.477 0 0 4.484 0 10.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0110 4.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.203 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.942.359.31.678.921.678 1.856 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0020 10.017C20 4.484 15.522 0 10 0z" 
+                          clipRule="evenodd"
+                        />
+                      </svg>
                       Sign in with Github
                     </button>
-                    {/* <button
-                      className="flex w-full items-center justify-center gap-3.5 rounded-lg border border-stroke bg-gray p-4 hover:bg-opacity-50 dark:border-strokedark dark:bg-meta-4 dark:hover:bg-opacity-50" 
-                      id="google-signin" 
-                      onClick={handleGoogleLoginClick}
-                    >
-                      <span>
-                        <svg
-                          width="20"
-                          height="20"
-                          viewBox="0 0 20 20"
-                          fill="none"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <g clipPath="url(#clip0_191_13499)">
-                            <path
-                              d="M19.999 10.2217C20.0111 9.53428 19.9387 8.84788 19.7834 8.17737H10.2031V11.8884H15.8266C15.7201 12.5391 15.4804 13.162 15.1219 13.7195C14.7634 14.2771 14.2935 14.7578 13.7405 15.1328L13.7209 15.2571L16.7502 17.5568L16.96 17.5774C18.8873 15.8329 19.9986 13.2661 19.9986 10.2217"
-                              fill="#4285F4"
-                            />
-                            <path
-                              d="M10.2055 19.9999C12.9605 19.9999 15.2734 19.111 16.9629 17.5777L13.7429 15.1331C12.8813 15.7221 11.7248 16.1333 10.2055 16.1333C8.91513 16.1259 7.65991 15.7205 6.61791 14.9745C5.57592 14.2286 4.80007 13.1801 4.40044 11.9777L4.28085 11.9877L1.13101 14.3765L1.08984 14.4887C1.93817 16.1456 3.24007 17.5386 4.84997 18.5118C6.45987 19.4851 8.31429 20.0004 10.2059 19.9999"
-                              fill="#34A853"
-                            />
-                            <path
-                              d="M4.39899 11.9777C4.1758 11.3411 4.06063 10.673 4.05807 9.99996C4.06218 9.32799 4.1731 8.66075 4.38684 8.02225L4.38115 7.88968L1.19269 5.4624L1.0884 5.51101C0.372763 6.90343 0 8.4408 0 9.99987C0 11.5589 0.372763 13.0963 1.0884 14.4887L4.39899 11.9777Z"
-                              fill="#FBBC05"
-                            />
-                            <path
-                              d="M10.2059 3.86663C11.668 3.84438 13.0822 4.37803 14.1515 5.35558L17.0313 2.59996C15.1843 0.901848 12.7383 -0.0298855 10.2059 -3.6784e-05C8.31431 -0.000477834 6.4599 0.514732 4.85001 1.48798C3.24011 2.46124 1.9382 3.85416 1.08984 5.51101L4.38946 8.02225C4.79303 6.82005 5.57145 5.77231 6.61498 5.02675C7.65851 4.28118 8.9145 3.87541 10.2059 3.86663Z"
-                              fill="#EB4335"
-                            />
-                          </g>
-                          <defs>
-                            <clipPath id="clip0_191_13499">
-                              <rect width="20" height="20" fill="white" />
-                            </clipPath>
-                          </defs>
-                        </svg>
-                      </span>
-                      Sign in with Google
-                    </button> */}
                     {/* Microsoft Sign-In */}
                     <button
                       onClick={handleMicrosoftLoginClick}
                       type="button"
-                      className="w-full rounded-lg border border-blue-700 bg-blue-600 text-black py-2 hover:bg-blue-700"
+                      className="flex w-full items-center justify-center gap-3 rounded-lg bg-white px-4 py-4 text-gray-800 transition-all hover:bg-gray-100 border border-gray-300 focus:ring-4 focus:ring-[#00A1F1]/50"
                     >
+                      <svg className="h-5 w-5" viewBox="0 0 23 23" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M1 1H11V11H1V1Z" fill="#F25022" />
+                        <path d="M12 1H22V11H12V1Z" fill="#7FBA00" />
+                        <path d="M1 12H11V22H1V12Z" fill="#00A4EF" />
+                        <path d="M12 12H22V22H12V12Z" fill="#FFB900" />
+                      </svg>
                       Iniciar sesión con Microsoft
                     </button>
                   </Form>

@@ -132,7 +132,7 @@ const ManageOrderAddress: React.FC = () => {
         <div>
             <Breadcrumb pageName={`Dirección de la Orden #${orderId}`} />
             <div className="p-6 bg-white rounded-md shadow-md">
-                <h2 className="text-xl font-semibold mb-4">Gestionar Dirección de la Orden #{orderId}</h2>
+                <h2 className="text-xl font-bold text-black mb-4">Gestionar Dirección de la Orden #{orderId}</h2>
 
                 {address ? (
                     <div>
@@ -158,19 +158,24 @@ const ManageOrderAddress: React.FC = () => {
                                 <p>Estado: {address.state}</p>
                                 <p>Código Postal: {address.postal_code || 'N/A'}</p>
                                 <p>Información Adicional: {address.additional_info || 'N/A'}</p>
-
-                                <button
-                                    onClick={() => setIsEditing(true)}
-                                    className="py-2 px-4 text-yellow-600 rounded-md hover:underline mr-2"
-                                >
-                                    Editar
-                                </button>
-                                <button
-                                    onClick={handleDeleteAddress}
-                                    className="py-2 px-4 text-red-600 rounded-md hover:underline"
-                                >
-                                    Eliminar
-                                </button>
+                                <div className="mt-6 flex flex-col sm:flex-row gap-4 w-full">
+                                    <button
+                                        onClick={() => setIsEditing(true)}
+                                        className="py-2 px-6 rounded-md bg-gray text-black hover:bg-gray-800
+                                            dark:bg-white dark:text-black dark:hover:bg-gray-100
+                                            transition-colors duration-200"
+                                    >
+                                        Editar
+                                    </button>
+                                    <button
+                                        onClick={handleDeleteAddress}
+                                        className="py-2 px-6 rounded-md bg-gray text-black hover:bg-gray-800
+                                            dark:bg-white dark:text-black dark:hover:bg-gray-100
+                                            transition-colors duration-200"
+                                    >
+                                        Eliminar
+                                    </button>
+                                </div>
                             </div>
                         )}
                     </div>
@@ -185,19 +190,24 @@ const ManageOrderAddress: React.FC = () => {
                         />
                     </div>
                 )}
-
-                <button
-                    onClick={handleGoBackToOrder}
-                    className="mt-4 py-2 px-4 text-black rounded-md bg-gray-500 hover:bg-gray-600"
-                >
-                    Volver a la Orden
-                </button>
-                <button
-                    onClick={() => navigate('/order/list')}
-                    className="mt-4 py2 px-4 text-black rounded-md bg-gray-500 hover:bg-gray-600"
-                >
-                    Volver a la lista de ordenes
-                </button>
+                <div className="mt-6 flex flex-col sm:flex-row gap-4 w-full">
+                    <button
+                        onClick={handleGoBackToOrder}
+                        className="py-2 px-6 rounded-md bg-gray text-black hover:bg-gray-800
+                            dark:bg-white dark:text-black dark:hover:bg-gray-100
+                            transition-colors duration-200"
+                    >
+                        Volver a la Orden
+                    </button>
+                    <button
+                        onClick={() => navigate('/order/list')}
+                        className="py-2 px-6 rounded-md bg-gray text-black hover:bg-gray-800
+                            dark:bg-white dark:text-black dark:hover:bg-gray-100
+                            transition-colors duration-200"
+                    >
+                        Volver a la lista de ordenes
+                    </button>
+                </div>
             </div>
         </div>
     );

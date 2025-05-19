@@ -159,18 +159,24 @@ const ListMenu: React.FC = () => {
                   ))}
                 </tbody>
               </table>
-              <button
-                onClick={handleGoBackToRestaurant}
-                className="mt-4 py-2 px-4 text-black rounded-md bg-gray-500 hover:bg-gray-600"
-              >
-                Volver al Restaurante
-              </button>
-              <button
-                onClick={() => navigate('/restaurant/list')}
-                className="mt-4 py2 px-4 text-black rounded-md bg-gray-500 hover:bg-gray-600"
-              >
-                Volver a la lista de restaurantes
-              </button>
+              <div className="mt-6 flex flex-col sm:flex-row gap-4 w-full">
+                <button
+                  onClick={handleGoBackToRestaurant}
+                  className="py-2 px-6 rounded-md bg-gray text-black hover:bg-gray-800
+                    dark:bg-white dark:text-black dark:hover:bg-gray-100
+                    transition-colors duration-200"
+                >
+                  Volver al Restaurante
+                </button>
+                <button
+                  onClick={() => navigate('/restaurant/list')}
+                  className="py-2 px-6 rounded-md bg-gray text-black hover:bg-gray-800
+                    dark:bg-white dark:text-black dark:hover:bg-gray-100
+                    transition-colors duration-200"
+                >
+                  Volver a la lista de restaurantes
+                </button>
+              </div>
             </div>
           </div>
         </div>

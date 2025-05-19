@@ -196,18 +196,24 @@ const ListIssue: React.FC = () => {
                 ))}
               </tbody>
             </table>
-            <button
-              onClick={handleGoBackToMotorcycle}
-              className="mt-4 py-2 px-4 text-black rounded-md bg-gray-500 hover:bg-gray-600"
-            >
-              Volver a la motocicleta
-            </button>
-            <button
-              onClick={() => navigate('/motorcycle/list')}
-              className="mt-4 py2 px-4 text-black rounded-md bg-gray-500 hover:bg-gray-600"
-            >
-              Volver a la lista de motocicletas
-            </button>
+            <div className="mt-6 flex flex-col sm:flex-row gap-4 w-full">
+              <button
+                onClick={handleGoBackToMotorcycle}
+                className="py-2 px-6 rounded-md bg-gray text-black hover:bg-gray-800
+                    dark:bg-white dark:text-black dark:hover:bg-gray-100
+                    transition-colors duration-200"
+              >
+                Volver a la motocicleta
+              </button>
+              <button
+                onClick={() => navigate('/motorcycle/list')}
+                className="py-2 px-6 rounded-md bg-gray text-black hover:bg-gray-800
+                    dark:bg-white dark:text-black dark:hover:bg-gray-100
+                    transition-colors duration-200"
+              >
+                Volver a la lista de motocicletas
+              </button>
+            </div>
           </div>
         </div>
       </div>
