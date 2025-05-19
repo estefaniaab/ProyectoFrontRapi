@@ -11,10 +11,10 @@ const GeminiChat: React.FC = () => {
   // Lista de preguntas frecuentes
   const faqs = [
     { question: "¿Cómo creo un nuevo turno?", prompt: "¿Cómo creo un nuevo turno en el sistema?" },
-    { question: "¿Qué significa que un turno esté activo?", prompt: "¿Qué significa que un turno esté activo en el sistema?" },
-    { question: "¿Cómo puedo saber si una moto está disponible?", prompt: "¿Cómo puedo saber si una moto está disponible para asignar a un turno?" },
+    { question: "¿Cómo agrego una avería?", prompt: "¿Cómo agrego una avería de una moto?" },
+    { question: "¿Cómo puedo serguir la entrega de mi pedido en tiempo real?", prompt: "¿Cómo puedo serguir la entrega de mi pedido en tiempo real?" },
     { question: "¿Puedo editar un turno existente?", prompt: "¿Puedo editar un turno existente en el sistema? ¿Cómo lo hago?" },
-    { question: "¿Qué hago si un conductor no está disponible?", prompt: "¿Qué hago si un conductor no está disponible para un turno?" },
+    { question: "¿Cómo realizo una orden?", prompt: "¿Como creo una orden?" },
   ];
 
   const handleGenerateContent = async () => {

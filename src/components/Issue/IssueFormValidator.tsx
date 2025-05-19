@@ -126,7 +126,7 @@ const IssueFormValidator: React.FC<IssueFormValidatorProps> = ({
               name="date_reported"
               value={values.date_reported || ""}
               className="w-full border rounded-md p-2"
-              disabled={readOnly || mode === 1}
+              disabled={readOnly }
             />
             <ErrorMessage name="date_reported" component="p" className="text-red-500 text-sm" />
           </div>

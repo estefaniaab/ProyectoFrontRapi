@@ -197,7 +197,7 @@ const ManageOrderAddress: React.FC = () => {
                             dark:bg-white dark:text-black dark:hover:bg-gray-100
                             transition-colors duration-200"
                     >
-                        Volver a la Orden
+                        Ver la Orden
                     </button>
                     <button
                         onClick={() => navigate('/order/list')}
