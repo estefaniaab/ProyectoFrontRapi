@@ -91,9 +91,12 @@ const coreRoutes = [
     component: Demo,
   },
   {
-    path: '/orders/:orderId/address',
+    path: '/order/:orderId/address',
     title: 'List of Adresses',
     component: listAddress,
+  },
+  {
+
   },
   {
     path: '/shift/list',
