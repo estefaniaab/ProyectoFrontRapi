@@ -10,7 +10,7 @@ import { Bar } from "react-chartjs-2";
 import useFetch from "../hooks/useFetch";
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Tooltip, Legend);
-
+const API_PARA_GRAFICOS = import.meta.env.VITE_POSTMAN_LOGIN_USER;
 interface ChartData {
   name: string;
   value: number;
@@ -18,13 +18,13 @@ interface ChartData {
 
 const TableTwo = () => {
   const { data: pedidos, loading: loading1 } = useFetch<ChartData[]>(
-    "https://b13f0cb6-ff95-4bb2-870a-d3c844428190.mock.pstmn.io/PedidosPorRestaurante"
+    API_PARA_GRAFICOS + "/PedidosPorRestaurante"
   );
   const { data: comidas, loading: loading2 } = useFetch<ChartData[]>(
-    "https://b13f0cb6-ff95-4bb2-870a-d3c844428190.mock.pstmn.io/ComidaMasSolicitada"
+    API_PARA_GRAFICOS + "/ComidaMasSolicitada"
   );
   const { data: accidentes, loading: loading3 } = useFetch<ChartData[]>(
-    "https://b13f0cb6-ff95-4bb2-870a-d3c844428190.mock.pstmn.io/AccidentesPorMes"
+    API_PARA_GRAFICOS + "/AccidentesPorMes"
   );
 
   const generateChartData = (data: ChartData[]) => ({
