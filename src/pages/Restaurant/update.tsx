@@ -49,7 +49,7 @@ const UpdateRestaurant = () => {
 
     return (
         <div>
-            <h2>Actualizar Restaurant</h2>
+
             <Breadcrumb pageName="Actualizar Restaurant" />
             <RestaurantFormValidator
                 handleUpdate={handleUpdateRestaurant}

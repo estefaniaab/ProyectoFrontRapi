@@ -44,7 +44,6 @@ const App = () => {
     return (
         <div>
             {/* Formulario para crear un nuevo producto */}
-            <h2>Create Product</h2>
             <Breadcrumb pageName="Crear Product" />
             <ProductFormValidator
                 handleCreate={handleCreateProduct}

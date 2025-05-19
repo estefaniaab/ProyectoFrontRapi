@@ -60,7 +60,7 @@ const UpdateCustomerPage = () => {
 
     return (
         <>
-            <Breadcrumb pageName="Actualizar Customer" />
+            <Breadcrumb pageName="Editar" />
             <CustomerFormValidator
                 handleUpdate={handleUpdateCustomer}
                 mode={2} // Actualizacion

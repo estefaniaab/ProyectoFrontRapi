@@ -66,7 +66,6 @@ const ViewShift = () => {
 
   return (
     <div>
-      <h2>Ver Turno</h2>
       <Breadcrumb pageName="Ver Turno" />
       <ShiftFormValidator
         mode={3}

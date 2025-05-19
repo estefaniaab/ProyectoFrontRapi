@@ -163,8 +163,10 @@ const ShiftFormValidator: React.FC<MyFormProps> = ({ mode, handleCreate, handleU
               <option value="">Selecciona una moto</option>
               {availableMotorcycles.map((motorcycle: Motorcycle) => (
                 <option key={motorcycle.id} value={motorcycle.id || ""}>
-                  {motorcycle.license_plate} {motorcycle.brand ? `(${motorcycle.brand})` : ""}
+                {motorcycle.license_plate}{" "}
+                {motorcycle.brand ? `(${motorcycle.brand})` : ""} - {motorcycle.status ? "Activo" : "Inactivo"}
                 </option>
+
               ))}
             </Field>
             <ErrorMessage name="motorcycle_id" component="p" className="text-red-500 text-sm" />

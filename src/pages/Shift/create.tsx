@@ -43,7 +43,6 @@ const CreateShift = () => {
 
   return (
     <div>
-      <h2>Crear Turno</h2>
       <Breadcrumb pageName="Crear Turno" />
       <ShiftFormValidator
         handleCreate={handleCreateShift}

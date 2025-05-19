@@ -34,8 +34,8 @@ const CreateDriver = () => {
 
     return (
         <div>
-            <h2>Create Driver</h2>
-            <Breadcrumb pageName="Crear Driver" />
+            
+            <Breadcrumb pageName="Crear Conductor" />
             <DriverFormValidator
                 handleCreate={handleCreateDriver}
                 mode={1}

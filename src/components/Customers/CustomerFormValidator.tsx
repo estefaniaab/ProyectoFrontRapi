@@ -49,7 +49,7 @@ const CustomerFormValidator: React.FC<MyFormProps> = ({mode, handleCreate, handl
                 <Form onSubmit={handleSubmit} className="grid grid-cols-1 gap-4 p-6 bg-white rounded-md shadow-md">
                     {/* Nombre */}
                     <div>
-                        <label htmlFor="name" className="block text-lg font-medium text-gray-700">Name</label>
+                        <label htmlFor="name" className="block text-lg font-medium text-gray-700">Nombre</label>
                         <Field type="text" name="name" className="w-full border rounded-md p-2" disabled={readOnly} />
                         <ErrorMessage name="name" component="p" className="text-red-500 text-sm" />
                     </div>
@@ -63,7 +63,7 @@ const CustomerFormValidator: React.FC<MyFormProps> = ({mode, handleCreate, handl
 
                     {/* Teléfono */}
                     <div>
-                        <label htmlFor="phone" className="block text-lg font-medium text-gray-700">Phone</label>
+                        <label htmlFor="phone" className="block text-lg font-medium text-gray-700">Telefono</label>
                         <Field type="text" name="phone" className="w-full border rounded-md p-2"  disabled={readOnly}/>
                         <ErrorMessage name="phone" component="p" className="text-red-500 text-sm" />
                     </div>

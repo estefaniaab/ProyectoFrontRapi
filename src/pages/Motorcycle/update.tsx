@@ -58,7 +58,6 @@ const UpdateMotorcycle = () => {
     }
     return (
         <div>
-            <h2>Actualizar Motocicleta</h2>
             <Breadcrumb pageName="Actualizar Motocicleta" />
             <MotorcycleFormValidator
                 handleUpdate={handleUpdateMotorcycle}

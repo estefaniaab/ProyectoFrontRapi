@@ -1,104 +1,74 @@
-import { Eye, Edit, Trash2 } from "lucide-react";
-import { useNavigate } from "react-router-dom";
-import { Driver } from "../../models/Driver";
-import { useState, useEffect } from "react";
+// src/pages/UpdateDriver.tsx
+import React, { useState, useEffect } from "react";
+import { useParams, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
+import Breadcrumb from "../../components/Breadcrumb";
+import { Driver } from "../../models/Driver";
 import { driverService } from "../../services/driverService";
+import DriverFormValidator from "../../components/Drivers/DriverFormValidator";
 
 
-const ListDriver = () => {
-    const navigate = useNavigate();
-    const [data, setData] = useState<Driver[]>([]);
+const UpdateDriverPage = () => {
+  const navigate = useNavigate();
+  const { id } = useParams<{ id: string }>(); // Obtiene el id de la URL
+  const [driver, setDriver] = useState<Driver | null>(null);
 
-    useEffect(() => {
-        fetchData();
-    }, []);
-
-    const fetchData = async () => {
-        const drivers = await driverService.getDrivers();
-        setData(drivers);
+  // Cargar datos del conductor después del montaje
+  useEffect(() => {
+    console.log("Id -> " + id);
+    const fetchDriver = async () => {
+      if (!id) return; // Si el id no está disponible
+      const driverData = await driverService.getDriverById(parseInt(id, 10));
+      setDriver(driverData);
     };
 
-    const handleCreate = () => navigate("/driver/create");
-    const handleView = (id: number) => navigate("/driver/view/" + id);
-    const handleEdit = (id: number) => navigate("/driver/update/" + id);
-    const handleDelete = async (id: number) => {
+    fetchDriver();
+  }, [id]);
+
+  const handleUpdateDriver = async (theDriver: Driver) => {
+    try {
+      const updatedDriver = await driverService.updateDriver(theDriver.id || 0, theDriver);
+      if (updatedDriver) {
         Swal.fire({
-            title: "Eliminación",
-            text: "Está seguro de querer eliminar el registro?",
-            icon: "warning",
-            showCancelButton: true,
-            confirmButtonColor: "#3085d6",
-            cancelButtonColor: "#d33",
-            confirmButtonText: "Sí, eliminar",
-            cancelButtonText: "No"
-        }).then(async (result) => {
-            if (result.isConfirmed) {
-                const success = await driverService.deleteDriver(id);
-                if (success) {
-                    Swal.fire({
-                        title: "Eliminado",
-                        text: "Se ha eliminado correctamente el registro",
-                        icon: "success",
-                        timer: 3000
-                    });
-                    fetchData();
-                } else {
-                    Swal.fire({
-                        title: "Error",
-                        text: "Existe un problema al momento de eliminar el registro",
-                        icon: "error",
-                        timer: 3000
-                    });
-                }
-            }
+          title: "Completado",
+          text: "Se ha actualizado correctamente el registro",
+          icon: "success",
+          timer: 3000,
         });
-    };
+        navigate("/driver/list"); // Redirección en React Router
+      } else {
+        Swal.fire({
+          title: "Error",
+          text: "Existe un problema al momento de actualizar el registro",
+          icon: "error",
+          timer: 3000,
+        });
+      }
+    } catch (error) {
+      Swal.fire({
+        title: "Error",
+        text: "Existe un problema al momento de actualizar el registro",
+        icon: "error",
+        timer: 3000,
+      });
+    }
+  };
 
-    return (
-        <div className="grid grid-cols-1 gap-9">
-            <div className="flex flex-col gap-9">
-                <div className="rounded-sm border border-stroke bg-white shadow-default">
-                    <div className="border-b border-stroke px-6.5 py-4">
-                        <h3 className="font-medium text-black">Listado Drivers</h3>
-                        <button onClick={handleCreate} className="text-green-600">Crear</button>
-                    </div>
-                    <div className="flex flex-col gap-5.5 p-6.5">
-                        <div className="overflow-x-auto">
-                            <table className="w-full text-sm text-left text-gray-500">
-                                <thead className="text-xs text-gray-700 uppercase bg-gray-50">
-                                    <tr>
-                                        <th scope="col" className="px-6 py-3">Name</th>
-                                        <th scope="col" className="px-6 py-3">License Number</th>
-                                        <th scope="col" className="px-6 py-3">Email</th>
-                                        <th scope="col" className="px-6 py-3">Phone</th>
-                                        <th scope="col" className="px-6 py-3">Status</th>
-                                        <th scope="col" className="px-6 py-3">Acciones</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {data.map((item) => (
-                                        <tr key={item.id} className="odd:bg-white even:bg-gray-50 border-b">
-                                            <td className="px-6 py-4">{item.name}</td>
-                                            <td className="px-6 py-4">{item.license_number}</td>
-                                            <td className="px-6 py-4">{item.email}</td>
-                                            <td className="px-6 py-4">{item.phone}</td>
-                                            <td className="px-6 py-4">{item.status}</td>
-                                            <td className="px-6 py-4 space-x-2">
-                                                <button onClick={() => handleView(item.id || 0)} className="text-blue-600"><Eye size={20} /></button>
-                                                <button onClick={() => handleEdit(item.id || 0)} className="text-yellow-600"><Edit size={20} /></button>
-                                                <button onClick={() => item.id && handleDelete(item.id)} className="text-red-600"><Trash2 size={20} /></button>
-                                            </td>
-                                        </tr>
-                                    ))}
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    );
+  if (!driver) {
+    return <div>Cargando...</div>; // Mientras se obtienen los datos
+  }
+
+  return (
+    <>
+      <Breadcrumb pageName="Editar Conductor" />
+      <DriverFormValidator
+        handleUpdate={handleUpdateDriver}
+        mode={2} // Actualización
+        driver={driver}
+        readOnly={false}
+      />
+    </>
+  );
 };
 
-export default ListDriver;
+export default UpdateDriverPage;

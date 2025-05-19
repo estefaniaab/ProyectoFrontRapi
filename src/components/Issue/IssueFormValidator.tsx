@@ -88,20 +88,6 @@ const IssueFormValidator: React.FC<IssueFormValidatorProps> = ({
     >
       {({ handleSubmit, values }) => (
         <Form onSubmit={handleSubmit} className="grid grid-cols-1 gap-4 p-6 bg-white rounded-md shadow-md">
-          {/* Motocicleta ID */}
-          <div>
-            <label htmlFor="motorcycle_id" className="block text-lg font-medium text-gray-700">
-              Motocicleta ID
-            </label>
-            <Field
-              type="number"
-              name="motorcycle_id"
-              className="w-full border rounded-md p-2"
-              disabled={readOnly}
-            />
-            <ErrorMessage name="motorcycle_id" component="p" className="text-red-500 text-sm" />
-          </div>
-
           {/* Descripción */}
           <div>
             <label htmlFor="description" className="block text-lg font-medium text-gray-700">
@@ -156,9 +142,9 @@ const IssueFormValidator: React.FC<IssueFormValidatorProps> = ({
               className="w-full border rounded-md p-2"
               disabled={readOnly}
             >
-              <option value="OPEN">OPEN</option>
-              <option value="IN_PROGRESS">IN PROGRESS</option>
-              <option value="RESOLVED">RESOLVED</option>
+              <option value="ABIERTO">ABIERTO</option>
+              <option value="EN_PROGRESO">EN PROGRESO</option>
+              <option value="RESUELTO">RESUELTO</option>
             </Field>
             <ErrorMessage name="issue_type" component="p" className="text-red-500 text-sm" />
           </div>

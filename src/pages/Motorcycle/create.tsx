@@ -42,7 +42,6 @@ const App = () => {
     return (
         <div>
             {/* Formulario para crear un nuevo customer */}
-            <h2>Crear Motocicleta</h2>
             <Breadcrumb pageName="Crear Motocicleta" />
             <MotorcycleFormValidator
                 handleCreate={handleCreateMotorcycle}

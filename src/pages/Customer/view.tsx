@@ -28,7 +28,7 @@ const ViewCustomerPage = () => {
     }
     return (
         <>
-            <Breadcrumb pageName="Ver Customer" />
+            <Breadcrumb pageName="Ver Usuario" />
             <CustomerFormValidator 
                 mode={2}
                 customer={customer}

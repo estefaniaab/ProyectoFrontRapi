@@ -34,7 +34,12 @@ const UpdateIssue: React.FC = () => {
           icon: "success",
           timer: 3000,
         });
-        navigate(motorcycleId ? `/issues/list/${motorcycleId}` : "/issues/list");
+                const effectiveMotorcycleId = updatedIssue.motorcycle_id || motorcycleId;
+        navigate(
+          effectiveMotorcycleId
+            ? `/issues/list/${effectiveMotorcycleId}`
+            : "/issues/list"
+        );
       } else {
         Swal.fire({
           title: "Error",

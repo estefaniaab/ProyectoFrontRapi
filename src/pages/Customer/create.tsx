@@ -43,8 +43,8 @@ const App = () => {
     return (
         <div>
             {/* Formulario para crear un nuevo customer */}
-            <h2>Create Customer</h2>
-                <Breadcrumb pageName="Crear Customer" />
+            
+                <Breadcrumb pageName="Crear Usuario" />
                 <CustomerFormValidator
                     handleCreate={handleCreateCustomer}
                     mode={1} // Creación

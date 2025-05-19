@@ -60,7 +60,7 @@ const ListDriver = () => {
             <div className="flex flex-col gap-9">
                 <div className="rounded-sm border border-stroke bg-white shadow-default">
                     <div className="border-b border-stroke px-6.5 py-4">
-                        <h3 className="font-medium text-black">Listado Drivers</h3>
+                        <h3 className="font-medium text-black">Listado de conductores</h3>
                         <button onClick={handleCreate} className="text-green-600">Crear</button>
                     </div>
                     <div className="flex flex-col gap-5.5 p-6.5">
@@ -68,11 +68,11 @@ const ListDriver = () => {
                             <table className="w-full text-sm text-left text-gray-500">
                                 <thead className="text-xs text-gray-700 uppercase bg-gray-50">
                                     <tr>
-                                        <th scope="col" className="px-6 py-3">Name</th>
-                                        <th scope="col" className="px-6 py-3">License Number</th>
+                                        <th scope="col" className="px-6 py-3">nombre</th>
+                                        <th scope="col" className="px-6 py-3">Número de licencia</th>
                                         <th scope="col" className="px-6 py-3">Email</th>
-                                        <th scope="col" className="px-6 py-3">Phone</th>
-                                        <th scope="col" className="px-6 py-3">Status</th>
+                                        <th scope="col" className="px-6 py-3">Telefono</th>
+                                        <th scope="col" className="px-6 py-3">Estado</th>
                                         <th scope="col" className="px-6 py-3">Acciones</th>
                                     </tr>
                                 </thead>

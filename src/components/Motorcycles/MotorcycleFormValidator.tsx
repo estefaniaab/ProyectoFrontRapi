@@ -29,13 +29,13 @@ const MotorcycleFormValidator: React.FC<MyFormProps> = ({mode, handleCreate, han
                 license_plate: "",
                 brand: "",
                 year: undefined,
-                status: "active"
+                status: "Activa"
             }}
             validationSchema={Yup.object({
                 license_plate: Yup.string().required('La placa es obligatoria'),
                 brand: Yup.string().required('La marca es obligatoria'),
                 year: Yup.number().min(1900, 'El año debe ser mayor a 1900').max(new Date().getFullYear(), 'El año no puede ser mayor al actual').required('El año es obligatorio'),
-                status: Yup.string().oneOf(['active', 'inactive'], 'El estado debe ser activo o inactivo').required('El estado es obligatorio')
+                status: Yup.string().oneOf(['Activo', 'Inactivo'], 'El estado debe ser activo o inactivo').required('El estado es obligatorio')
             })}
 
             onSubmit={(values) => {
@@ -48,31 +48,31 @@ const MotorcycleFormValidator: React.FC<MyFormProps> = ({mode, handleCreate, han
                 <Form onSubmit={handleSubmit} className="grid grid-cols-1 gap-4 p-6 bg-white rounded-md shadow-md">
                     {/* Placa */}
                     <div>
-                        <label htmlFor="license_plate" className="block text-lg font-medium text-gray-700">License Plate</label>
+                        <label htmlFor="license_plate" className="block text-lg font-medium text-gray-700">Placa</label>
                         <Field type="text" name="license_plate" className="w-full border rounded-md p-2" disabled={readOnly} />
                         <ErrorMessage name="license_plate" component="p" className="text-red-500 text-sm" />
                     </div>
 
                     {/* Marca */}
                     <div>
-                        <label htmlFor="brand" className="block text-lg font-medium text-gray-700">Brand</label>
+                        <label htmlFor="brand" className="block text-lg font-medium text-gray-700">Marca</label>
                         <Field type="text" name="brand" className="w-full border rounded-md p-2" disabled={readOnly} />
                         <ErrorMessage name="brand" component="p" className="text-red-500 text-sm" />
                     </div>
 
                     {/* Año */}
                     <div>
-                        <label htmlFor="year" className="block text-lg font-medium text-gray-700">Year</label>
+                        <label htmlFor="year" className="block text-lg font-medium text-gray-700">Año/Modelo</label>
                         <Field type="number" name="year" className="w-full border rounded-md p-2" disabled={readOnly} />
                         <ErrorMessage name="year" component="p" className="text-red-500 text-sm" />
                     </div>
 
                     {/* Estado */}
                     <div>
-                        <label htmlFor="status" className="block text-lg font-medium text-gray-700">Status</label>
+                        <label htmlFor="status" className="block text-lg font-medium text-gray-700">Estado</label>
                         <Field as="select" name="status" className="w-full border rounded-md p-2" disabled={readOnly}>
-                            <option value="active">Active</option>
-                            <option value="inactive">Inactive</option>
+                            <option value="Activo">Activo</option>
+                            <option value="Inactivo">Inactivo</option>
                         </Field>
                         <ErrorMessage name="status" component="p" className="text-red-500 text-sm" />
                     </div>
@@ -92,7 +92,7 @@ const MotorcycleFormValidator: React.FC<MyFormProps> = ({mode, handleCreate, han
                     type="button"
                     className="py-2 px-6 text-black rounded-md bg-gray-500 hover:bg-gray-600"
                     onClick={() => {
-                        navigate("/list/motorcycle")
+                        navigate("/motorcycle/list")
                     }}
                     >
                         Volver

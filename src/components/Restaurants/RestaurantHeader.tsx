@@ -25,7 +25,7 @@ const RestaurantHeader: React.FC<RestaurantHeaderProps> = ({ restaurantId }) => 
   }
 
   return (
-    <div className="mb-6 p-4 bg-gray-100 rounded-md">
+    <div className="mb-6 p-4 bg-gray-100 rounded-md text-center ">
       <h2 className="text-2xl font-bold text-gray-800">
         Restaurante: {restaurant.name}
       </h2>

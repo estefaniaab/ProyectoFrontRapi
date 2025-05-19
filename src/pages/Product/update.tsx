@@ -60,7 +60,6 @@ const UpdateProduct = () => {
     }
     return (
         <div>
-            <h2>Actualizar Productos</h2>
             <Breadcrumb pageName="Actualizar Producto" />
             <ProductFormValidator
                 handleUpdate={handleUpdateProduct}

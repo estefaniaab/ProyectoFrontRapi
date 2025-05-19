@@ -23,7 +23,7 @@ const ViewRestaurantPage = () => {
 
     return (
         <>
-            <Breadcrumb pageName="Ver Restaurant" />
+            <Breadcrumb pageName="Ver Restaurante" />
             <RestaurantFormValidator mode={3} restaurant={restaurant} readOnly={true} />
         </>
     );

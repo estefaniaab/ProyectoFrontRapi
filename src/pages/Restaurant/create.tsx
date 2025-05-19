@@ -34,8 +34,8 @@ const CreateRestaurant = () => {
 
     return (
         <div>
-            <h2 className="bg-meta-1">Create Restaurant</h2>
-            <RestaurantFormValidator
+            <Breadcrumb pageName="Crear Restaurante" />
+            <RestaurantFormValidator 
                 handleCreate={handleCreateRestaurant}
                 mode={1}
                 readOnly={false}

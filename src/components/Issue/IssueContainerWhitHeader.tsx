@@ -25,21 +25,21 @@ const IssueContainerWithHeader: React.FC<IssueContainerWithHeaderProps> = ({ chi
     return (
         <div className="p-6">
             {motorcycle && (
-                <div className="mb-6 p-4 bg-gray-100 rounded-md shadow-sm">
-                    <h2 className="text-xl font-semibold text-gray-800">Información de la Motocicleta</h2>
-                    <div className="mt-2 space-y-1">
-                        <p className="text-gray-600">
-                            <span className="font-medium">Placa:</span> {motorcycle.license_plate || "N/A"}
-                        </p>
-                        <p className="text-gray-600">
-                            <span className="font-medium">Modelo:</span> {motorcycle.year || "N/A"}
-                        </p>
-                    </div>
-                </div>
+            <div className="mb-6 p-4 bg-gray-100 rounded-md text-center ">
+                <h2 className="text-2xl font-bold text-gray-800">
+                    {`Moto ${motorcycle?.brand}: ${motorcycle?.license_plate}`}
+                </h2>
+                <p className="text-lg text-gray-600">
+                    Modelo: {motorcycle?.year}
+                </p>
+            </div>
+
             )}
             {children}
         </div>
-    );
+        );
+
+
 };
 
 export default IssueContainerWithHeader;

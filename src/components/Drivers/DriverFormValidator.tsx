@@ -37,8 +37,8 @@ const DriverFormValidator: React.FC<MyFormProps> = ({ mode, handleCreate, handle
                 name: Yup.string().required('Nombre es requerido'),
                 license_number: Yup.string().required('El número de la licencia es requerido'),
                 email: Yup.string().email('Email invalido').required('El email es requerido'),
-                phone: Yup.string().required('El telefono es requerido'),
-                status: Yup.string().oneOf(['active', 'inactive'], 'Status must be active or inactive').required('Status is required')
+                phone: Yup.string().matches(/^\d{10}$/, 'El teléfono debe tener 10 dígitos').required('El teléfono es obligatorio'),
+                status: Yup.string().oneOf(['Activo', 'Inactivo'], 'El estado debe ser Activo o Inactivo').required('Estado es requerido')
             })}
             onSubmit={(values) => {
                 const formattedValues = { ...values };
@@ -48,12 +48,12 @@ const DriverFormValidator: React.FC<MyFormProps> = ({ mode, handleCreate, handle
             {({ handleSubmit }) => (
                 <Form onSubmit={handleSubmit} className="grid grid-cols-1 gap-4 p-6 bg-white rounded-md shadow-md">
                     <div>
-                        <label htmlFor="name" className="block text-lg font-medium text-gray-700">Name</label>
+                        <label htmlFor="name" className="block text-lg font-medium text-gray-700">Nombre</label>
                         <Field type="text" name="name" className="w-full border rounded-md p-2" disabled={readOnly} />
                         <ErrorMessage name="name" component="p" className="text-red-500 text-sm" />
                     </div>
                     <div>
-                        <label htmlFor="license_number" className="block text-lg font-medium text-gray-700">License Number</label>
+                        <label htmlFor="license_number" className="block text-lg font-medium text-gray-700">Licencia</label>
                         <Field type="text" name="license_number" className="w-full border rounded-md p-2" disabled={readOnly} />
                         <ErrorMessage name="license_number" component="p" className="text-red-500 text-sm" />
                     </div>
@@ -63,15 +63,15 @@ const DriverFormValidator: React.FC<MyFormProps> = ({ mode, handleCreate, handle
                         <ErrorMessage name="email" component="p" className="text-red-500 text-sm" />
                     </div>
                     <div>
-                        <label htmlFor="phone" className="block text-lg font-medium text-gray-700">Phone</label>
+                        <label htmlFor="phone" className="block text-lg font-medium text-gray-700">Telefono</label>
                         <Field type="text" name="phone" className="w-full border rounded-md p-2" disabled={readOnly} />
                         <ErrorMessage name="phone" component="p" className="text-red-500 text-sm" />
                     </div>
                     <div>
-                        <label htmlFor="status" className="block text-lg font-medium text-gray-700">Status</label>
+                        <label htmlFor="status" className="block text-lg font-medium text-gray-700">Estado</label>
                         <Field as="select" name="status" className="w-full border rounded-md p-2" disabled={readOnly}>
-                            <option value="active">Active</option>
-                            <option value="inactive">Inactive</option>
+                            <option value="Activo">Activo</option>
+                            <option value="Inactivo">Inactivo</option>
                         </Field>
                         <ErrorMessage name="status" component="p" className="text-red-500 text-sm" />
                     </div>

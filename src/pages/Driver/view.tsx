@@ -23,7 +23,7 @@ const ViewDriverPage = () => {
 
     return (
         <>
-            <Breadcrumb pageName="Ver Driver" />
+            <Breadcrumb pageName="Ver Conductor" />
             <DriverFormValidator mode={3} driver={driver} readOnly={true} />
         </>
     );
