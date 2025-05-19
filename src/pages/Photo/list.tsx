@@ -9,11 +9,7 @@ import PhotoContainerWithHeader from "../../components/Photo/PhotoContainerWhitH
 const ListPhoto: React.FC = () => {
     const navigate = useNavigate();
     const { issue_id } = useParams<{ issue_id?: string }>();
-
-    
-    const issueId = issue_id ? parseInt(issue_id, 10) : undefined;
-
-    
+    const issueId = issue_id ? parseInt(issue_id) : undefined;
     const [photos, setPhotos] = useState<Photo[]>([]);
 
     useEffect(() => {
@@ -23,13 +19,12 @@ const ListPhoto: React.FC = () => {
     const fetchPhotos = async () => {
         let photos: Photo[] = [];
 
-        if (issueId) {
+        if (issueId ) {
             if(!isNaN(issueId)){
                 photos = await photoService.getPhotosByIssueId(issueId);
             }else{
                 console.error("ID de la averia inválido:", issue_id);
-            }
-            
+            }           
             
         } else {
             photos = await photoService.getPhotos(); // 
@@ -38,6 +33,11 @@ const ListPhoto: React.FC = () => {
         console.log("Fotos obtenidas:", photos); // 
         setPhotos(photos);
     };
+    const getPublicImageUrl = (imagePath: string | undefined) => {
+        if (!imagePath) return `${import.meta.env.VITE_API_URL}/uploads/default.png`;
+        const filename = imagePath.split("\\").pop() || "default.png";
+        return `${import.meta.env.VITE_API_URL}/uploads/${filename}`;
+    }
 
     const handleCreate = () => {
         if (issueId) {
@@ -93,11 +93,11 @@ const ListPhoto: React.FC = () => {
         });
     };
 
-    const getPublicImageUrl = (imagePath: string | undefined) => {
+    /*const getPublicImageUrl = (imagePath: string | undefined) => {
         if (!imagePath) return `${import.meta.env.VITE_API_URL}/uploads/default.png`;
         const filename = imagePath.split("\\").pop() || "default.png";
         return `${import.meta.env.VITE_API_URL}/uploads/${filename}`;
-    };
+    };*/
 
     return (
         <PhotoContainerWithHeader issueId={issueId}>
@@ -123,42 +123,40 @@ const ListPhoto: React.FC = () => {
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {photos.map((item) => (
+                                        {photos.map((photo) => (
                                             <tr
-                                                key={item.id}
+                                                key={photo.id}
                                                 className="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700 border-gray-200"
                                             >
                                                 <td className="px-6 py-4 font-medium text-gray-900 dark:text-white">
-                                                    {item.id}
+                                                    {photo.id}
                                                 </td>
                                                 <td className="px-6 py-4">
                                                     <img
-                                                        src={getPublicImageUrl(item.image_url)}
-                                                        alt={item.caption}
+                                                        src={getPublicImageUrl(photo.image_url)}
+                                                        alt={photo.caption || "Foto"}
                                                         className="w-16 h-16 object-cover rounded"
                                                     />
                                                 </td>
-                                                <td className="px-6 py-4">{item.caption}</td>
+                                                <td className="px-6 py-4">{photo.caption || "Sin descripción"}</td>
                                                 <td className="px-6 py-4">
-                                                    {item.taken_at
-                                                        ? new Date(item.taken_at).toLocaleString()
-                                                        : "Fecha inválida"}
+                                                   {photo.taken_at ? new Date(photo.taken_at).toLocaleString() : "Fecha inválida"}
                                                 </td>
                                                 <td className="px-6 py-4 space-x-2">
                                                     <button
-                                                        onClick={() => handleView(item.id || 0)}
+                                                        onClick={() => handleView(photo.id || 0)}
                                                         className="text-blue-600 dark:text-blue-500"
                                                     >
                                                         <Eye size={20} />
                                                     </button>
                                                     <button
-                                                        onClick={() => handleEdit(item.id || 0)}
+                                                        onClick={() => handleEdit(photo.id || 0)}
                                                         className="text-yellow-600 dark:text-yellow-500"
                                                     >
                                                         <Edit size={20} />
                                                     </button>
                                                     <button
-                                                        onClick={() => item.id !== undefined && handleDelete(item.id)}
+                                                        onClick={() => photo.id !== undefined && handleDelete(item.id)}
                                                         className="text-red-600 dark:text-red-500"
                                                     >
                                                         <Trash2 size={20} />

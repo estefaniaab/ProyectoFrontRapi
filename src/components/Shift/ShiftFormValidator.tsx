@@ -10,6 +10,7 @@ import { Shift } from "../../models/Shift";
 import { Motorcycle } from "../../models/Motorcycle";
 import { Driver } from "../../models/Driver";
 import { motorcycleService } from "../../services/motorcycleServices";
+import Swal from "sweetalert2";
 
 interface MyFormProps {
   mode: number; // 1 (create), 2 (update), 3 (view)
@@ -26,36 +27,19 @@ const ShiftFormValidator: React.FC<MyFormProps> = ({ mode, handleCreate, handleU
 
   // Obtener motos y conductores disponibles
   useEffect(() => {
-    const fetchAvailabilityData = async () => {
+    const fetchData = async () => {
       try {
-        const shiftsData = await shiftService.getShifts();
+        //const shiftsData = await shiftService.getShifts();
         const motorcyclesData = await motorcycleService.getMotorcycles();
         const driversData = await driverService.getDrivers();
-
-        // Filtrar motos disponibles (sin turno activo)
-        const activeShifts = shiftsData.filter(
-          (shift) =>
-            shift.status === "active" &&
-            (!shift.end_time || new Date(shift.end_time) > new Date())
-        );
-        const activeMotorcycleIds = activeShifts.map((shift) => shift.motorcycle_id);
-        const availableMotorcyclesData = motorcyclesData.filter(
-          (motorcycle) => motorcycle.id && !activeMotorcycleIds.includes(motorcycle.id)
-        );
-        setAvailableMotorcycles(availableMotorcyclesData);
-
-        // Filtrar conductores disponibles (sin turno activo)
-        const activeDriverIds = activeShifts.map((shift) => shift.driver_id);
-        const availableDriversData = driversData.filter(
-          (driver) => driver.id && !activeDriverIds.includes(driver.id)
-        );
-        setAvailableDrivers(availableDriversData);
+        setAvailableMotorcycles(motorcyclesData);
+        setAvailableDrivers(driversData);
       } catch (error) {
         console.error("Error fetching availability data:", error);
       }
     };
 
-    fetchAvailabilityData();
+    fetchData();
   }, []);
 
   const handleSubmit = (formattedValues: Shift) => {
@@ -73,27 +57,27 @@ const ShiftFormValidator: React.FC<MyFormProps> = ({ mode, handleCreate, handleU
       .required("La moto es requerida")
       .positive("Debe ser un número positivo")
       .integer("Debe ser un número entero")
-      .test(
+      /*.test(
         "is-available",
         "La moto no está disponible",
         (value) => value !== undefined && availableMotorcycles.some((m) => m.id === value)
-      ),
+      )*/,
     driver_id: Yup.number()
       .required("El conductor es requerido")
       .positive("Debe ser un número positivo")
       .integer("Debe ser un número entero")
-      .test(
+      /*.test(
         "is-available",
         "El conductor no está disponible",
         (value) => value !== undefined && availableDrivers.some((d) => d.id === value)
-      ),
+      )*/,
     start_time: Yup.date()
-      .required("La fecha de inicio es requerida")
-      .test(
+      .required("La fecha de inicio es requerida"),
+      /*.test(
         "is-future",
         "La fecha de inicio debe ser futura o actual",
         (value) => value && new Date(value) >= new Date()
-      ),
+      )*/
     end_time: Yup.date()
       .nullable()
       .test(
@@ -101,11 +85,14 @@ const ShiftFormValidator: React.FC<MyFormProps> = ({ mode, handleCreate, handleU
         "La fecha de fin debe ser posterior a la fecha de inicio",
         function (value) {
           const startTime = this.parent.start_time;
-          return !value || !startTime || new Date(value) > new Date(startTime);
+          // Si no se proporciona fecha de fin, la validación pasa
+          if (!value || !startTime) return true;
+          return new Date(value) > new Date(startTime);
         }
       ),
+      
     status: Yup.string()
-      .oneOf(["active", "inactive"], "El estado debe ser 'active' o 'inactive'")
+      .oneOf(["Activo", "Inactivo"], "El estado debe ser Activo o Inactivo")
       .required("El estado es requerido"),
   });
 
@@ -125,12 +112,39 @@ const ShiftFormValidator: React.FC<MyFormProps> = ({ mode, handleCreate, handleU
               driver_id: "",
               start_time: new Date().toISOString().slice(0, 16),
               end_time: "",
-              status: "active",
+              status: "Activo",
             }
       }
       validationSchema={validationSchema}
       onSubmit={(values) => {
-        // Definimos el objeto base sin el id
+        // Si estamos creando, verificamos que la moto y el conductor estén activos.
+        if (mode === 1) {
+          const selectedMotorcycleId = parseInt(values.motorcycle_id as string, 10);
+          const selectedDriverId = parseInt(values.driver_id as string, 10);
+
+          const selectedMotorcycle = availableMotorcycles.find(
+            (m) => m.id === selectedMotorcycleId
+          );
+          const selectedDriver = availableDrivers.find(
+            (d) => d.id === selectedDriverId
+          );
+
+          if (
+            (selectedMotorcycle && selectedMotorcycle.status === "Inactivo") ||
+            (selectedDriver && selectedDriver.status === "Inactivo")
+          ) {
+            Swal.fire({
+              title: "Error",
+              text: "No se puede crear un turno con una moto o un conductor inactivos.",
+              icon: "error",
+              timer: 3000,
+            });
+            navigate("/shift/list");
+            return; // Salimos sin crear el turno
+          }
+        }
+
+        // Construir el objeto base con los datos del formulario.
         const baseValues = {
           motorcycle_id: parseInt(values.motorcycle_id as string, 10),
           driver_id: parseInt(values.driver_id as string, 10),
@@ -139,13 +153,13 @@ const ShiftFormValidator: React.FC<MyFormProps> = ({ mode, handleCreate, handleU
           status: values.status,
         };
 
-        // Si estamos en modo actualización o visualización, el id ya debería existir
         const formattedValues: Shift = shift?.id
           ? { id: shift.id, ...baseValues }
-          : (baseValues as Shift); // En modo creación, el backend asignará el id
+          : (baseValues as Shift);
 
         handleSubmit(formattedValues);
       }}
+
     >
       {({ handleSubmit }) => (
         <Form onSubmit={handleSubmit} className="grid grid-cols-1 gap-4 p-6 bg-white rounded-md shadow-md">
@@ -158,13 +172,13 @@ const ShiftFormValidator: React.FC<MyFormProps> = ({ mode, handleCreate, handleU
               as="select"
               name="motorcycle_id"
               className="w-full border rounded-md p-2"
-              disabled={readOnly || mode === 2}
+              disabled={readOnly }
             >
               <option value="">Selecciona una moto</option>
               {availableMotorcycles.map((motorcycle: Motorcycle) => (
                 <option key={motorcycle.id} value={motorcycle.id || ""}>
                 {motorcycle.license_plate}{" "}
-                {motorcycle.brand ? `(${motorcycle.brand})` : ""} - {motorcycle.status ? "Activo" : "Inactivo"}
+                {motorcycle.brand ? `(${motorcycle.brand})` : ""} - {motorcycle.status}
                 </option>
 
               ))}
@@ -181,14 +195,15 @@ const ShiftFormValidator: React.FC<MyFormProps> = ({ mode, handleCreate, handleU
               as="select"
               name="driver_id"
               className="w-full border rounded-md p-2"
-              disabled={readOnly || mode === 2}
+              disabled={readOnly }
             >
               <option value="">Selecciona un conductor</option>
-              {availableDrivers.map((driver: Driver) => (
-                <option key={driver.id} value={driver.id || ""}>
-                  {driver.name}
-                </option>
-              ))}
+                {availableDrivers.map((driver: Driver) => (
+                  <option key={driver.id} value={driver.id || ""}>
+                    {driver.name} {driver.license_number ? `| Licencia: ${driver.license_number}` : ""}{" "}
+                    {driver.status}
+                  </option>
+                ))}
             </Field>
             <ErrorMessage name="driver_id" component="p" className="text-red-500 text-sm" />
           </div>
@@ -232,8 +247,8 @@ const ShiftFormValidator: React.FC<MyFormProps> = ({ mode, handleCreate, handleU
               className="w-full border rounded-md p-2"
               disabled={readOnly}
             >
-              <option value="active">Activo</option>
-              <option value="inactive">Inactivo</option>
+              <option value="Activo">Activo</option>
+              <option value="Inactivo">Inactivo</option>
             </Field>
             <ErrorMessage name="status" component="p" className="text-red-500 text-sm" />
           </div>

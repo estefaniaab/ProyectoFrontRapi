@@ -35,7 +35,7 @@ const UpdateMotorcycle = () => {
                     icon: "success",
                     timer: 3000
                 });
-                navigate("/list/motorcycle"); // Redirección en React Router
+                navigate("/motorcycle/list"); // Redirección en React Router
             } else {
                 Swal.fire({
                     title: "Error",

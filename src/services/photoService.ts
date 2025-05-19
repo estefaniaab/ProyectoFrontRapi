@@ -30,10 +30,7 @@ class PhotoService {
     async getPhotosByIssueId(issueId: number): Promise<Photo[]> {
         try {
             const response = await api.get<Photo[]>(`${API_URL}/issues/${issueId}/photos`);
-            return response.data.map(photo => ({
-                ...photo,
-                taken_at: new Date(photo.taken_at)
-            }));
+            return response.data;
         } catch (error) {
             console.error(`Error al obtener las fotos para la avería ${issueId}:`, error);
             return [];
